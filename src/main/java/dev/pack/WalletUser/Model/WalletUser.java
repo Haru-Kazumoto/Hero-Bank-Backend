@@ -4,6 +4,7 @@ import dev.pack.User.Model.UserEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigInteger;
 import java.util.UUID;
 
 @Getter
@@ -17,10 +18,10 @@ import java.util.UUID;
 public class WalletUser {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "uuid")
+    @GeneratedValue(generator = "uuid")
     private UUID id;
-    private Long userBalance;
-    private Long pocketBalance;
+    private BigInteger userBalance;
+    private BigInteger pocketBalance;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

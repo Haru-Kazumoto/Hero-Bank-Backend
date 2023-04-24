@@ -1,5 +1,6 @@
 package dev.pack.User.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import dev.pack.UserInfo.Model.UserInfo;
 import dev.pack.WalletUser.Model.WalletUser;
 import jakarta.persistence.*;
@@ -21,53 +22,57 @@ import java.util.UUID;
 @Table(name = "User_Table")
 public class UserEntity implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "uuid")
+    @GeneratedValue( generator = "uuid")
     private UUID id;
 
     @Column(unique = true, nullable = false)
-    private Long pin;
+    private String pin;
 
-    private boolean isActive;
-    private boolean isLocked;
+//    @OneToOne(mappedBy = "userEntity", cascade = CascadeType.ALL)
+//    private UserInfo info;
 
-    @OneToOne(mappedBy = "userEntity", cascade = CascadeType.ALL)
-    private UserInfo info;
-
-    @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
-    private List<WalletUser> walletUsers;
+//    @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
+//    private List<WalletUser> walletUsers;
 
     @Override
+    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
     }
 
     @Override
+    @JsonIgnore
     public String getPassword() {
-        return this.pin.toString();
+        return this.pin;
     }
 
     @Override
+    @JsonIgnore
     public String getUsername() {
         return null;
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonExpired() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonLocked() {
-        return !isLocked;
+        return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isEnabled() {
-        return isActive;
+        return true;
     }
 }

@@ -15,7 +15,7 @@ import java.util.UUID;
 @Table(name = "address_user_table")
 public class AddressUser {
 
-    @Id @GeneratedValue(generator = "uuid", strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(generator = "uuid")
     private UUID id;
 
     private String country;
