@@ -4,7 +4,6 @@ import dev.pack.GlobalException.MessageResponse;
 import dev.pack.User.Dto.UserDto;
 import dev.pack.User.Model.UserEntity;
 import dev.pack.User.Service.Interfaces.UserService;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;

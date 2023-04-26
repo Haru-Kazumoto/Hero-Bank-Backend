@@ -12,7 +12,8 @@ public class OutputResponseMapper implements Function<UserEntity, OutputResponse
     public OutputResponse apply(UserEntity user) {
         return new OutputResponse(
                 user.getId(),
-                user.getPin()
+                user.getPin(),
+                user.getUserInfo()
         );
     }
 }

@@ -1,5 +1,7 @@
 package dev.pack.WalletUser.Model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import dev.pack.User.Model.UserEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -15,6 +17,10 @@ import java.util.UUID;
 @ToString
 @Entity
 @Table(name = "Wallet_User_Table")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id"
+)
 public class WalletUser {
 
     @Id
@@ -23,7 +29,7 @@ public class WalletUser {
     private BigInteger userBalance;
     private BigInteger pocketBalance;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", updatable = false)
     private UserEntity userEntity;
 }

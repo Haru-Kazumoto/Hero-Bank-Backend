@@ -8,6 +8,7 @@ import java.util.UUID;
 
 public record OutputResponse(
         UUID id,
-        String pin
+        String pin,
+        UserInfo info
 ) {
 }

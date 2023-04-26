@@ -1,6 +1,6 @@
 package dev.pack.UserInfo.Dto;
 
-import dev.pack.Address.Model.AddressUser;
+import dev.pack.Address.Dto.AddressUserDto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -17,6 +17,6 @@ public class UserInfoDto {
     @NotEmpty(message = "Nickname must filled!")
     private String nickname;
     @NotNull(message = "Address user cannot be null!")
-    private AddressUser addressUser;
+    private AddressUserDto addressUser;
 
 }
