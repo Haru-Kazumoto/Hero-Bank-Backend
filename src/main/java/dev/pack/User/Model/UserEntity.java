@@ -1,6 +1,7 @@
 package dev.pack.User.Model;
 
 import com.fasterxml.jackson.annotation.*;
+import dev.pack.SavingsUser.Model.SavingsUser;
 import dev.pack.UserInfo.Model.UserInfo;
 import dev.pack.WalletUser.Model.WalletUser;
 import jakarta.persistence.*;
@@ -9,9 +10,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.math.BigInteger;
-import java.util.Collection;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Getter
 @Setter
@@ -34,25 +33,34 @@ public class UserEntity implements UserDetails {
     private String pin;
 
     @OneToOne(
-            mappedBy = "userEntity",
+            mappedBy = "userEntityId",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
     private UserInfo userInfo;
 
     @OneToOne(
-            mappedBy = "userEntity",
+            mappedBy = "userEntityId",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
     private WalletUser walletUser;
 
+    @OneToMany(
+            mappedBy = "userEntityId",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<SavingsUser> savingsUsers = new ArrayList<>();
+
     @PrePersist
     public void setWalletUser() {
-        this.walletUser = new WalletUser();
-        this.walletUser.setUserEntity(this);
-        this.walletUser.setUserBalance(BigInteger.valueOf(0));
-        this.walletUser.setPocketBalance(BigInteger.valueOf(0));
+        if(this.walletUser == null){
+            this.walletUser = new WalletUser();
+            this.walletUser.setUserEntityId(this);
+            this.walletUser.setUserBalance(BigInteger.valueOf(0));
+            this.walletUser.setPocketBalance(BigInteger.valueOf(0));
+        }
     }
 
     @Override

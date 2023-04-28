@@ -30,5 +30,5 @@ public class AddressUser {
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "userInfo_id", updatable = false)
-    private UserInfo userInfo;
+    private UserInfo userInfoId;
 }

@@ -1,14 +1,11 @@
 package dev.pack.SavingsUser.Model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import dev.pack.User.Model.UserEntity;
+import dev.pack.WalletUser.Model.WalletUser;
+import jakarta.persistence.*;
+import lombok.*;
 
+import java.math.BigInteger;
 import java.util.UUID;
 
 @Getter
@@ -16,12 +13,18 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Builder
 @Table(name = "savings_user_table")
 public class SavingsUser {
 
     @Id @GeneratedValue(generator = "uuid")
     private UUID id;
 
+    private String title;
+    private BigInteger savingsBalance = BigInteger.valueOf(0);
+    private BigInteger collectedPlans;
 
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "userEntity_id")
+    private UserEntity userEntityId;
 }

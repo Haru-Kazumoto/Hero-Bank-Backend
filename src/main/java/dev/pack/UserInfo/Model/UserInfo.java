@@ -29,18 +29,20 @@ public class UserInfo{
     @GeneratedValue(generator = "uuid")
     private UUID id;
 
-    private String pocketNumber;
     private String accountNumber;
     @Column(unique = true, nullable = false)
-    private String email;
-    private String officialName;
-    private String nickname;
 
+    private String email;
+    private String username;
+    @Column(unique = true, nullable = false)
+
+    private String phoneNumber;
     @JsonFormat(pattern = "dd-MM-yyyy")
+
     private LocalDate joinAt;
 
     @OneToOne(
-            mappedBy = "userInfo",
+            mappedBy = "userInfoId",
             cascade = CascadeType.ALL,
             orphanRemoval = true,
             fetch = FetchType.LAZY
@@ -49,7 +51,7 @@ public class UserInfo{
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "userEntity_id", updatable = false)
-    private UserEntity userEntity;
+    private UserEntity userEntityId;
 
     @PrePersist
     public void setJoinAt() {
