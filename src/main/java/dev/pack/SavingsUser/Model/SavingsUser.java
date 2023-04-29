@@ -1,7 +1,8 @@
 package dev.pack.SavingsUser.Model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import dev.pack.User.Model.UserEntity;
-import dev.pack.WalletUser.Model.WalletUser;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -15,16 +16,25 @@ import java.util.UUID;
 @Entity
 @Builder
 @Table(name = "savings_user_table")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id"
+)
 public class SavingsUser {
 
     @Id @GeneratedValue(generator = "uuid")
     private UUID id;
 
     private String title;
-    private BigInteger savingsBalance = BigInteger.valueOf(0);
+    private BigInteger savingsBalance;
     private BigInteger collectedPlans;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userEntity_id")
     private UserEntity userEntityId;
+
+    @PrePersist
+    public void setSavingsBalance() {
+        this.savingsBalance = BigInteger.valueOf(0);
+    }
 }

@@ -29,7 +29,6 @@ public class UserEntity implements UserDetails {
     @GeneratedValue( generator = "uuid")
     private UUID id;
 
-    @Column(unique = true, nullable = false)
     private String pin;
 
     @OneToOne(

@@ -1,7 +1,6 @@
 package dev.pack.Address.Service;
 
 import dev.pack.Address.Model.AddressUser;
-import dev.pack.Address.Repository.AddressRepository;
 import dev.pack.UserInfo.Model.UserInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -10,13 +9,15 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AddressUserService {
 
-    private final AddressRepository addressRepository;
-
-    public AddressUser createAddressUser(AddressUser addressUser){
-        UserInfo userInfo = new UserInfo();
-        addressUser.setUserInfoId(userInfo);
-
-        return addressRepository.save(addressUser);
+    public AddressUser createAddressUser(UserInfo userInfo){
+        return AddressUser
+                .builder()
+                .id(userInfo.getAddressUser().getId())
+                .country(userInfo.getAddressUser().getCountry())
+                .province(userInfo.getAddressUser().getProvince())
+                .city(userInfo.getAddressUser().getCity())
+                .district(userInfo.getAddressUser().getDistrict())
+                .userInfoId(userInfo)
+                .build();
     }
-
 }

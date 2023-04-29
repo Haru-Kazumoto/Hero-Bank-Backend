@@ -16,7 +16,7 @@ public interface UserService extends UserDetailsService {
 
     UserEntity createUser(UserEntity user);
 
-    List<OutputResponse> getAllUser();
+    List<UserEntity> getAllUser();
 
     void deleteUserById(UUID id);
 

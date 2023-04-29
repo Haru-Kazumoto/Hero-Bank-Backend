@@ -18,5 +18,6 @@ public class UserDto {
     @NotNull(message = "Info user must be filled!")
     private UserInfoDto userInfo;
 
-    private List<SavingsUserDto> savingsUser;
+    @NotNull(message = "SavingsUser cannot be null")
+    private List<SavingsUserDto> savingsUsers;
 }

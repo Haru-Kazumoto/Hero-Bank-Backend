@@ -1,11 +1,8 @@
 package dev.pack.UserInfo.Service;
 
-import dev.pack.Address.Model.AddressUser;
-import dev.pack.User.Model.UserEntity;
 import dev.pack.UserInfo.Model.UserInfo;
 import dev.pack.UserInfo.Repository.UserInfoRepository;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.User;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
@@ -18,17 +15,12 @@ public class UserInfoService {
 
     private final UserInfoRepository userInfoRepository;
 
-//    public UserInfo createAddressUser(UserInfo userInfo){
-//        UserEntity user = new UserEntity();
-////        UserInfo.builder().userEntityId(user.getId());
-//        return userInfoRepository.save(userInfo);
-//    }
-
-    public void findEmailUser(String email)throws DataIntegrityViolationException{
-        Optional<UserInfo> emailUser = userInfoRepository.findByEmail(email);
+    public Optional<UserInfo> findEmailUser(String email) throws DataIntegrityViolationException{
+        var emailUser = userInfoRepository.findByEmail(email);
         if(emailUser.isPresent()){
             throw new DataIntegrityViolationException(String.format("Email %s has already exists",email));
         }
+        return emailUser;
     }
 
     public void findPhoneNumberUser(String phoneNumberUser)throws DataIntegrityViolationException{
