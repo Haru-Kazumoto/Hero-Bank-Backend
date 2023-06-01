@@ -1,8 +1,8 @@
 package dev.pack.WalletUser.Model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import dev.pack.SavingsUser.Model.SavingsUser;
 import dev.pack.User.Model.UserEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -31,6 +31,7 @@ public class WalletUser {
     private BigInteger userBalance;
     private BigInteger pocketBalance;
 
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", updatable = false)
     private UserEntity userEntityId;

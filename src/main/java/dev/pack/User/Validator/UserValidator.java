@@ -1,21 +1,23 @@
 package dev.pack.User.Validator;
 
 import dev.pack.User.Model.UserEntity;
+import dev.pack.User.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.stereotype.Service;
 
-@Component
+import java.util.Optional;
+
+@Service
 @RequiredArgsConstructor
 public class UserValidator {
 
-    public void validate(UserEntity user){
-        validatePinUser(user.getPin());
-    }
+    private final UserRepository userRepository;
 
-    public void validatePinUser(String pin) {
-        int pinLength = pin.length();
-        if (pinLength < 4 || pinLength > 8) {
-            throw new IllegalArgumentException("Pin must have minimal 4 number and maximum 8 number");
+    public void isEmailExists(String email) throws DataIntegrityViolationException {
+        Optional<UserEntity> emailUser = userRepository.findByEmail(email);
+        if(emailUser.isPresent()){
+            throw new DataIntegrityViolationException(String.format("Email %s already exists",emailUser));
         }
     }
 }

@@ -1,7 +1,9 @@
-package dev.pack.UserInfo.Service;
+package dev.pack.UserInfo.Service.Implements;
 
+import dev.pack.User.Model.UserEntity;
 import dev.pack.UserInfo.Model.UserInfo;
 import dev.pack.UserInfo.Repository.UserInfoRepository;
+import dev.pack.UserInfo.Service.Interfaces.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -11,17 +13,9 @@ import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
-public class UserInfoService {
+public class UserInfoServiceImpl implements UserService {
 
     private final UserInfoRepository userInfoRepository;
-
-    public Optional<UserInfo> findEmailUser(String email) throws DataIntegrityViolationException{
-        var emailUser = userInfoRepository.findByEmail(email);
-        if(emailUser.isPresent()){
-            throw new DataIntegrityViolationException(String.format("Email %s has already exists",email));
-        }
-        return emailUser;
-    }
 
     public void findPhoneNumberUser(String phoneNumberUser)throws DataIntegrityViolationException{
         Optional<UserInfo> phoneNumber = userInfoRepository.findByPhoneNumber(phoneNumberUser);
@@ -40,5 +34,16 @@ public class UserInfoService {
         }
 
         return builder.toString();
+    }
+
+    @Override
+    public UserInfo createUserInfoBody(UserEntity user) {
+        UserInfo userInfo = user.getUserInfo();
+        userInfo.setAccountNumber(
+                generateNumberForAccountNumber()
+        );
+        userInfo.setUserEntityId(user);
+
+        return userInfoRepository.save(userInfo);
     }
 }

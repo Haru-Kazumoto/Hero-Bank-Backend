@@ -41,6 +41,10 @@ public class SecurityConfig {
                 .cors().and()
                 .authorizeHttpRequests((auth) -> {
                     auth.anyRequest().permitAll();
+//                    auth.requestMatchers(
+//                            "/user/**",
+//                            "/"
+//                    ).permitAll();
 //                    try {
 //                        auth.anyRequest()
 //                                .fullyAuthenticated()
@@ -52,24 +56,24 @@ public class SecurityConfig {
 //                    } catch (Exception e) {
 //                        throw new RuntimeException(e);
 //                    }
-                });
-//                .httpBasic(Customizer.withDefaults());
+                })
+                .httpBasic(Customizer.withDefaults());
         return httpSecurity.build();
     }
 
-//    @Bean
-//    public AuthenticationManager authenticationManager(
-//            AuthenticationConfiguration authenticationConfiguration
-//    ) throws Exception{
-//        return authenticationConfiguration.getAuthenticationManager();
-//    }
-//
-//    @Bean
-//    public AuthenticationProvider authenticationProvider() {
-//        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-//        authProvider.setUserDetailsService(userDetailsService());
-//        authProvider.setPasswordEncoder(bCryptPasswordEncoder);
-//
-//        return authProvider;
-//    }
+    @Bean
+    public AuthenticationManager authenticationManager(
+            AuthenticationConfiguration authenticationConfiguration
+    ) throws Exception{
+        return authenticationConfiguration.getAuthenticationManager();
+    }
+
+    @Bean
+    public AuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(userDetailsService());
+        authProvider.setPasswordEncoder(bCryptPasswordEncoder);
+
+        return authProvider;
+    }
 }

@@ -3,7 +3,6 @@ package dev.pack.UserInfo.Model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import dev.pack.Address.Model.AddressUser;
 import dev.pack.User.Model.UserEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -30,24 +29,14 @@ public class UserInfo{
     private UUID id;
 
     private String accountNumber;
-    @Column(unique = true, nullable = false)
 
-    private String email;
     private String username;
     @Column(unique = true, nullable = false)
 
     private String phoneNumber;
+
     @JsonFormat(pattern = "dd-MM-yyyy")
-
     private LocalDate joinAt;
-
-    @OneToOne(
-            mappedBy = "userInfoId",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true,
-            fetch = FetchType.LAZY
-    )
-    private AddressUser addressUser;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "userEntity_id", updatable = false)
@@ -57,6 +46,4 @@ public class UserInfo{
     public void setJoinAt() {
         this.joinAt = LocalDate.now();
     }
-
-
 }

@@ -1,7 +1,6 @@
 package dev.pack.User.Service.Interfaces;
 
 import dev.pack.User.Model.UserEntity;
-import dev.pack.User.Response.OutputResponse;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -14,11 +13,11 @@ public interface UserService extends UserDetailsService {
     @Override
     UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
 
-    UserEntity createUser(UserEntity user);
+    UserEntity createUserBody(UserEntity user);
 
     List<UserEntity> getAllUser();
 
-    void deleteUserById(UUID id);
+    Map<String, String> deleteUserById(UUID id);
 
     UserEntity updateUser(UUID id, UserEntity user);
 }

@@ -31,6 +31,9 @@ public class UserEntity implements UserDetails {
 
     private String pin;
 
+    @Column(unique = true)
+    private String email;
+
     @OneToOne(
             mappedBy = "userEntityId",
             cascade = CascadeType.ALL,
@@ -77,7 +80,7 @@ public class UserEntity implements UserDetails {
     @Override
     @JsonIgnore
     public String getUsername() {
-        return null;
+        return this.userInfo.getUsername();
     }
 
     @Override

@@ -1,19 +1,18 @@
 package dev.pack.User.Service.Implements;
 
-import dev.pack.Address.Service.AddressUserService;
-import dev.pack.SavingsUser.Model.SavingsUser;
+import dev.pack.SavingsUser.Service.Implements.SavingsUserServiceImpl;
 import dev.pack.User.Model.UserEntity;
 import dev.pack.User.Repository.UserRepository;
 import dev.pack.User.Service.Interfaces.UserService;
-import dev.pack.User.Validator.UserValidator;
-import dev.pack.UserInfo.Model.UserInfo;
-import dev.pack.UserInfo.Service.UserInfoService;
+import dev.pack.UserInfo.Service.Implements.UserInfoServiceImpl;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
@@ -24,9 +23,11 @@ import java.util.*;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final UserInfoService userInfoService;
-    private final UserValidator userValidator;
-    private final AddressUserService addressUserService;
+
+    //Service dependency
+    private final UserInfoServiceImpl userInfoServiceImpl;
+    private final SavingsUserServiceImpl savingsUserServiceImpl;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String pin) throws UsernameNotFoundException {
@@ -44,36 +45,23 @@ public class UserServiceImpl implements UserService {
                     SQLException.class,
                     DuplicateKeyException.class
             })
-    public UserEntity createUser(UserEntity user) {
+    public UserEntity createUserBody(UserEntity user){
 
-        UserInfo userInfo = user.getUserInfo();
-        List<SavingsUser> savingsUserList = user.getSavingsUsers();
-        //Create a random string number for number account and number pocket user
-        String randomNumber = userInfoService.generateNumberForAccountNumber();
+        userInfoServiceImpl.createUserInfoBody(user);
+        savingsUserServiceImpl.createSavingsUserBody(user);
 
-        userValidator.validate(user);
-
-        userInfoService.findEmailUser(userInfo.getEmail());
-        userInfoService.findPhoneNumberUser(userInfo.getPhoneNumber());
-        //End validating.
-
-        //Set the random string number
-        userInfo.setAccountNumber(randomNumber);
-        userInfo.setUserEntityId(user);
-
-        //Set addressUser body.
-        userInfo.setAddressUser(
-                addressUserService.createAddressUser(
-                        user.getUserInfo()
-                )
-        );
-
-        for (SavingsUser savingsUser : savingsUserList) {
-            savingsUser.setUserEntityId(user);
-        }
-        user.setSavingsUsers(savingsUserList);
+        user.setPin(passwordEncoder.encode(user.getPassword())); //Hash pin
 
         return userRepository.save(user);
+    }
+
+    private Map<String, String> setResponse(UUID id, HttpStatus status, String message) {
+        Map<String, String> response = new HashMap<>();
+        response.put("id", id.toString());
+        response.put("status", status.toString());
+        response.put("message", message);
+
+        return response;
     }
 
     @Override
@@ -82,12 +70,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-//    @Transactional(rollbackOn = {NoSuchElementException.class})
-    public void deleteUserById(UUID id) {
-        userRepository
-                    .findById(id)
-                    .orElseThrow(() -> new NoSuchElementException(String.format("Id %s not exists", id)));
+    public Map<String, String> deleteUserById(UUID id) {
+        Optional<UserEntity> findId = userRepository.findById(id);
+        if (findId.isEmpty()){
+            Map<String, String> response = setResponse(
+                    id,
+                    HttpStatus.NOT_FOUND,
+                    String.format("Id %s is not found.",id)
+            );
+            throw new NoSuchElementException((Throwable) response);
+        }
         userRepository.deleteById(id);
+        return setResponse(
+                id,
+                HttpStatus.OK,
+                String.format("Id %s success to delete.",id)
+        );
     }
 
     @Override
