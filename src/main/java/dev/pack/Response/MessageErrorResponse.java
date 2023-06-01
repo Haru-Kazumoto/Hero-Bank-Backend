@@ -1,4 +1,4 @@
-package dev.pack.GlobalException;
+package dev.pack.Response;
 
 import lombok.*;
 import org.springframework.http.HttpStatus;
@@ -9,11 +9,9 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class MessageResponse {
+public class MessageErrorResponse {
 
     private HttpStatus statusCode;
     private List<String> message;
 
-    public MessageResponse(int status, List<String> message) {
-    }
 }
