@@ -1,6 +1,5 @@
 package dev.pack.User.Service.Implements;
 
-import dev.pack.SavingsUser.Service.Implements.SavingsUserServiceImpl;
 import dev.pack.User.Model.UserEntity;
 import dev.pack.User.Repository.UserRepository;
 import dev.pack.User.Service.Interfaces.UserService;
@@ -26,7 +25,6 @@ public class UserServiceImpl implements UserService {
 
     //Service dependency
     private final UserInfoServiceImpl userInfoServiceImpl;
-    private final SavingsUserServiceImpl savingsUserServiceImpl;
     private final BCryptPasswordEncoder passwordEncoder;
 
     @Override
@@ -48,7 +46,6 @@ public class UserServiceImpl implements UserService {
     public UserEntity createUserBody(UserEntity user){
 
         userInfoServiceImpl.createUserInfoBody(user);
-        savingsUserServiceImpl.createSavingsUserBody(user);
 
         user.setPin(passwordEncoder.encode(user.getPassword())); //Hash pin
 
@@ -94,6 +91,11 @@ public class UserServiceImpl implements UserService {
             DataIntegrityViolationException.class
     })
     public UserEntity updateUser(UUID id, UserEntity user) {
-        return null;
+        Optional<UserEntity> findId = userRepository.findById(id);
+        if(findId.isEmpty()){
+            throw new NoSuchElementException(String.format("Id %s is not found!", id));
+        }
+
+        return userRepository.save(user);
     }
 }

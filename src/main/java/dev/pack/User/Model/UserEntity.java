@@ -29,10 +29,11 @@ public class UserEntity implements UserDetails {
     @GeneratedValue( generator = "uuid")
     private UUID id;
 
-    private String pin;
-
     @Column(unique = true)
     private String email;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) //Excluding
+    private String pin;
 
     @OneToOne(
             mappedBy = "userEntityId",
@@ -65,6 +66,7 @@ public class UserEntity implements UserDetails {
         }
     }
 
+    //Authority is not used in this app
     @Override
     @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -80,7 +82,7 @@ public class UserEntity implements UserDetails {
     @Override
     @JsonIgnore
     public String getUsername() {
-        return this.userInfo.getUsername();
+        return this.email;
     }
 
     @Override

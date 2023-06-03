@@ -25,4 +25,14 @@ public class SavingsUserServiceImpl implements SavingsUserService {
 
         return savingsUserRepository.saveAll(savingsUserList);
     }
+
+    @Override
+    public List<SavingsUser> createSavingsUserBody(List<SavingsUser> savingsUser) {
+        return savingsUserRepository.saveAll(savingsUser);
+    }
+
+    @Override
+    public List<SavingsUser> getAllRecord() {
+        return savingsUserRepository.findAll();
+    }
 }

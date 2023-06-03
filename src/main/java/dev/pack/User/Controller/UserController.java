@@ -2,9 +2,11 @@ package dev.pack.User.Controller;
 
 import dev.pack.Response.MessageErrorResponse;
 import dev.pack.Response.PayloadResponse;
-import dev.pack.User.Dto.UserDto;
+import dev.pack.User.Dto.UserCreateDto;
+import dev.pack.User.Dto.UserCreateUpdateDto;
 import dev.pack.User.Model.UserEntity;
 import dev.pack.User.Service.Interfaces.UserService;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -18,7 +20,7 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(path = "/user/")
+@RequestMapping(path = "api/v1/user/")
 public class UserController {
 
     private final UserService userService;
@@ -39,7 +41,7 @@ public class UserController {
 
     @PostMapping(path = "create")
     public ResponseEntity<?> createUser(
-            @Valid @RequestBody UserDto user) throws DataIntegrityViolationException {
+            @Valid @RequestBody UserCreateDto user) throws DataIntegrityViolationException {
         try{
             UserEntity userEntity = mapper.map(user, UserEntity.class);
             UserEntity dataPayload = userService.createUserBody(userEntity);
@@ -62,8 +64,8 @@ public class UserController {
     }
 
     @DeleteMapping(path = "delete/{id}")
-    public ResponseEntity<?> hardDeleteUserById(@PathVariable("id") UUID id) throws NullPointerException{
-        try{
+    public ResponseEntity<?> hardDeleteUserById(@PathVariable("id") UUID id) throws NullPointerException {
+        try {
             return ResponseEntity.status(HttpStatus.OK).body(userService.deleteUserById(id));
         } catch (NullPointerException err) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
@@ -75,5 +77,27 @@ public class UserController {
         }
     }
 
-
+    @PutMapping(path = "update/{id}")
+    public ResponseEntity<?> updateUserRecord(
+            @PathVariable("id") UUID id,
+            @RequestBody @Valid UserCreateUpdateDto userCreateUpdateDto,
+            HttpServletResponse response) throws DataIntegrityViolationException{
+        try {
+            UserEntity user = mapper.map(userCreateUpdateDto, UserEntity.class);
+            return ResponseEntity
+                    .status(response.getStatus())
+                    .body(
+                            userService.updateUser(id, user)
+                    );
+        } catch (DataIntegrityViolationException err) {
+            return ResponseEntity
+                    .status(response.getStatus())
+                    .body(
+                            new MessageErrorResponse(
+                                    HttpStatus.CONFLICT,
+                                    List.of(err.getMessage())
+                            )
+                    );
+        }
+    }
 }

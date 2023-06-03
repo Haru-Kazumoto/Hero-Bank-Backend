@@ -1,0 +1,27 @@
+#Database connection configuration
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/Hero-bank-db
+    username: postgres
+    password: admin
+    hikari:
+      connection-timeout: 3000
+      maximum-pool-size: 10
+      minimum-idle: 5
+      idle-timeout: 600000
+      pool-name: Pool-Connection-Spring
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    database: postgresql
+
+#Server configuration
+server:
+  port: 6666
+  error:
+    include-message: always

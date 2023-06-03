@@ -1,4 +1,4 @@
-package dev.pack.User.Validator;
+package dev.pack.Validator;
 
 import dev.pack.User.Model.UserEntity;
 import dev.pack.User.Repository.UserRepository;
@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class UserValidator {
+public class ValidatorRequest {
 
     private final UserRepository userRepository;
 
