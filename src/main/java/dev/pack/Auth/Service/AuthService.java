@@ -2,17 +2,15 @@ package dev.pack.Auth.Service;
 
 import dev.pack.Auth.AuthRequest;
 import dev.pack.Auth.AuthResponse;
-import dev.pack.Auth.RegisterRequest;
 import dev.pack.Configuration.JWTService;
 import dev.pack.Response.PayloadResponse;
-import dev.pack.User.Model.UserEntity;
-import dev.pack.User.Repository.UserRepository;
-import dev.pack.User.Service.Interfaces.UserService;
+import dev.pack.Module.User.Model.UserEntity;
+import dev.pack.Module.User.Repository.UserRepository;
+import dev.pack.Module.User.Service.Interfaces.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -47,5 +45,4 @@ public class AuthService {
                 .token(jwtToken)
                 .build();
     }
-
 }

@@ -1,7 +1,7 @@
 package dev.pack.Validator;
 
-import dev.pack.User.Model.UserEntity;
-import dev.pack.User.Repository.UserRepository;
+import dev.pack.Module.User.Model.UserEntity;
+import dev.pack.Module.User.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;

@@ -2,11 +2,15 @@ package dev.pack.GlobalException;
 
 import dev.pack.Response.MessageErrorResponse;
 import dev.pack.Response.TransactionErrorResponse;
+import dev.pack.Response.UnauthorizedErrorResponse;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.transaction.TransactionException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -23,6 +27,38 @@ import java.util.List;
 
 @ControllerAdvice
 public class GlobalExceptionHandling extends ResponseEntityExceptionHandler {
+
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<Object> handleBadCredentialException(
+            BadCredentialsException ex,
+            HttpHeaders headers,
+            HttpStatusCode status,
+            WebRequest request
+    ){
+        var response = new UnauthorizedErrorResponse(
+                HttpStatus.UNAUTHORIZED.value(),
+                "Unauthorized",
+                String.format("Invalid credential : %s", ex.getCause())
+        );
+
+        return new ResponseEntity<>(response, headers, status);
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<Object> handleAuthenticationException(
+            AuthenticationException ex,
+            HttpHeaders headers,
+            HttpStatusCode status,
+            WebRequest request
+    ){
+        UnauthorizedErrorResponse response = new UnauthorizedErrorResponse(
+            HttpStatus.UNAUTHORIZED.value(),
+                "Unauthorized",
+                "Missing or malformed jwt"
+        );
+
+        return new ResponseEntity<>(response, headers, status);
+    }
 
     @ExceptionHandler(TransactionException.class)
     public ResponseEntity<TransactionErrorResponse> handleTransactionError(TransactionException ex){
@@ -46,9 +82,9 @@ public class GlobalExceptionHandling extends ResponseEntityExceptionHandler {
     @Override
     protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(
             HttpRequestMethodNotSupportedException ex,
-            HttpHeaders headers,
-            HttpStatusCode status,
-            WebRequest request) {
+            @NonNull HttpHeaders headers,
+            @NonNull HttpStatusCode status,
+            @NonNull WebRequest request) {
         MessageErrorResponse response = new MessageErrorResponse(
                 HttpStatus.METHOD_NOT_ALLOWED,
                 Collections.singletonList(ex.getMessage())
@@ -60,9 +96,9 @@ public class GlobalExceptionHandling extends ResponseEntityExceptionHandler {
     @Override
     protected ResponseEntity<Object> handleMissingServletRequestPart(
             MissingServletRequestPartException ex,
-            HttpHeaders headers,
-            HttpStatusCode status,
-            WebRequest request) {
+            @NonNull HttpHeaders headers,
+            @NonNull HttpStatusCode status,
+            @NonNull WebRequest request) {
         MessageErrorResponse response = new MessageErrorResponse(
                 HttpStatus.NOT_FOUND,
                 Collections.singletonList(ex.getMessage())
@@ -73,9 +109,9 @@ public class GlobalExceptionHandling extends ResponseEntityExceptionHandler {
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(
             MethodArgumentNotValidException ex,
-            HttpHeaders headers,
-            HttpStatusCode status,
-            WebRequest request) {
+            @NonNull HttpHeaders headers,
+            @NonNull HttpStatusCode status,
+            @NonNull WebRequest request) {
         MessageErrorResponse response = new MessageErrorResponse(
                 HttpStatus.NOT_ACCEPTABLE,
                 Collections.singletonList(ex.getMessage())
@@ -86,9 +122,9 @@ public class GlobalExceptionHandling extends ResponseEntityExceptionHandler {
     @Override
     protected ResponseEntity<Object> handleNoHandlerFoundException(
             NoHandlerFoundException ex,
-            HttpHeaders headers,
-            HttpStatusCode status,
-            WebRequest request) {
+            @NonNull HttpHeaders headers,
+            @NonNull HttpStatusCode status,
+            @NonNull WebRequest request) {
         MessageErrorResponse response = new MessageErrorResponse(
                 HttpStatus.NOT_FOUND,
                 Collections.singletonList(ex.getMessage())

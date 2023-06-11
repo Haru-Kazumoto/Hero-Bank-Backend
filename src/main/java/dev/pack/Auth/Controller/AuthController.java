@@ -5,7 +5,7 @@ import dev.pack.Auth.RegisterRequest;
 import dev.pack.Auth.AuthResponse;
 import dev.pack.Auth.Service.AuthService;
 import dev.pack.Response.PayloadResponse;
-import dev.pack.User.Model.UserEntity;
+import dev.pack.Module.User.Model.UserEntity;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.TransactionalException;
 import jakarta.validation.Valid;
