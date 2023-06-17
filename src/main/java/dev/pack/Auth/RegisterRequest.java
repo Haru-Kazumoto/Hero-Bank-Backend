@@ -1,6 +1,6 @@
 package dev.pack.Auth;
 
-import dev.pack.Module.UserInfo.Model.UserInfo;
+import dev.pack.Module.UserInfo.UserInfo;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

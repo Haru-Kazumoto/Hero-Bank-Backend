@@ -1,6 +1,6 @@
 package dev.pack.Module.User.Response;
 
-import dev.pack.Module.UserInfo.Model.UserInfo;
+import dev.pack.Module.UserInfo.UserInfo;
 
 import java.util.UUID;
 

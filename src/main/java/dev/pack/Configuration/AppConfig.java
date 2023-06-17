@@ -1,6 +1,7 @@
 package dev.pack.Configuration;
 
-import dev.pack.Module.User.Repository.UserRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import dev.pack.Module.User.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
@@ -18,6 +19,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @RequiredArgsConstructor
 public class AppConfig {
     private final UserRepository userRepository;
+
+    @Bean
+    public ObjectMapper objectMapper(){
+        return new ObjectMapper();
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder(){

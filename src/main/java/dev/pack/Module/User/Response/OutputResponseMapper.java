@@ -1,6 +1,6 @@
 package dev.pack.Module.User.Response;
 
-import dev.pack.Module.User.Model.UserEntity;
+import dev.pack.Module.User.UserEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.function.Function;
