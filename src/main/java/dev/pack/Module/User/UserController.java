@@ -2,10 +2,13 @@ package dev.pack.Module.User;
 
 import dev.pack.Response.MessageErrorResponse;
 import dev.pack.Response.PayloadResponse;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,12 +22,20 @@ import java.util.UUID;
 @RequestMapping(path = "api/v1/user/")
 public class UserController {
 
+    private final Logger LOG = LoggerFactory.getLogger(this.getClass());
+
     private final UserService userService;
     private final ModelMapper mapper;
 
     @GetMapping(path = "get-all")
-    public ResponseEntity<?> getAllUser(){
+    public ResponseEntity<?> getAllUser(
+            HttpServletRequest request,
+            HttpServletResponse response
+    ){
         List<UserEntity> dataPayload = userService.getAllUser();
+
+        LOG.info("Incoming request [{}] - [{}] - [{}]", request.getMethod(), request.getRequestURI(), response.getStatus());
+
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(

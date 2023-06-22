@@ -13,17 +13,6 @@ public class SavingsUserServiceImpl implements SavingsUserService {
     private final SavingsUserRepository savingsUserRepository;
 
     @Override
-    public List<SavingsUser> createSavingsUserBody(UserEntity user) {
-        List<SavingsUser> savingsUserList = user.getSavingsUsers();
-
-        for (SavingsUser savingsUser : savingsUserList) {
-            savingsUser.setUserEntityId(user);
-        }
-
-        return savingsUserRepository.saveAll(savingsUserList);
-    }
-
-    @Override
     public List<SavingsUser> createSavingsUserBody(List<SavingsUser> savingsUser) {
         return savingsUserRepository.saveAll(savingsUser);
     }

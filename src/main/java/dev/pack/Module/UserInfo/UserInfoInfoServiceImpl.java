@@ -1,6 +1,7 @@
 package dev.pack.Module.UserInfo;
 
 import dev.pack.Module.User.UserEntity;
+import dev.pack.Utils.GenerateRandomNumber;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import java.util.Random;
 public class UserInfoInfoServiceImpl implements UserInfoService {
 
     private final UserInfoRepository userInfoRepository;
+    private final GenerateRandomNumber generator;
 
     public void findPhoneNumberUser(String phoneNumberUser)throws DataIntegrityViolationException{
         Optional<UserInfo> phoneNumber = userInfoRepository.findByPhoneNumber(phoneNumberUser);
@@ -21,7 +23,18 @@ public class UserInfoInfoServiceImpl implements UserInfoService {
         }
     }
 
-    public String generateNumberForAccountNumber() {
+    @Override
+    public UserInfo createUserInfoBody(UserEntity user) {
+        UserInfo userInfo = user.getUserInfo();
+        userInfo.setAccountNumber(
+                generateAccountNumber()
+        );
+        userInfo.setUserEntityId(user);
+
+        return userInfoRepository.save(userInfo);
+    }
+
+    public String generateAccountNumber() {
         Random random_number = new Random();
         StringBuilder builder = new StringBuilder();
 
@@ -31,16 +44,5 @@ public class UserInfoInfoServiceImpl implements UserInfoService {
         }
 
         return builder.toString();
-    }
-
-    @Override
-    public UserInfo createUserInfoBody(UserEntity user) {
-        UserInfo userInfo = user.getUserInfo();
-        userInfo.setAccountNumber(
-                generateNumberForAccountNumber()
-        );
-        userInfo.setUserEntityId(user);
-
-        return userInfoRepository.save(userInfo);
     }
 }

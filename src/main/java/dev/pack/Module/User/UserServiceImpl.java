@@ -41,10 +41,9 @@ public class UserServiceImpl implements UserService {
                     DuplicateKeyException.class
             })
     public UserEntity createUserBody(UserEntity user){
+        user.setPin(passwordEncoder.encode(user.getPassword())); //Hash pin
 
         userInfoServiceImpl.createUserInfoBody(user);
-
-        user.setPin(passwordEncoder.encode(user.getPassword())); //Hash pin
 
         return userRepository.save(user);
     }

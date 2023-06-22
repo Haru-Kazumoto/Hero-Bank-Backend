@@ -30,8 +30,18 @@ public class WalletUser {
     private BigInteger userBalance;
     private BigInteger pocketBalance;
 
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", updatable = false)
+    @JsonIgnoreProperties(
+            {
+                    "hibernateLazyInitializer",
+                    "handler"
+            })
+    @OneToOne(
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
+    )
+    @JoinColumn(
+            name = "user_id",
+            updatable = false
+    )
     private UserEntity userEntityId;
 }
