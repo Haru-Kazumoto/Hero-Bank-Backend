@@ -1,0 +1,72 @@
+2023-06-25T19:12:48.176+07:00  INFO 15828 --- [http-nio-6666-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-06-25T19:12:48.177+07:00  INFO 15828 --- [http-nio-6666-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-06-25T19:12:48.206+07:00  INFO 15828 --- [http-nio-6666-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 29 ms
+2023-06-25T19:12:48.365+07:00 ERROR 15828 --- [http-nio-6666-exec-1] d.p.C.JwtAuthenticationFilter            : Cannot set user authentication: JWT String argument cannot be null or empty.
+2023-06-25T19:12:48.437+07:00  INFO 15828 --- [http-nio-6666-exec-1] dev.pack.Utils.LoggingInterceptor        : Incoming request [POST] - [/api/v1/auth/signIn] - [200]
+2023-06-25T19:12:49.558+07:00  INFO 15828 --- [http-nio-6666-exec-1] dev.pack.Utils.LoggingInterceptor        : Completed request. Method: POST, Path: /api/v1/auth/signIn, Response Status: 200 - OK
+2023-06-25T19:12:57.933+07:00  INFO 15828 --- [http-nio-6666-exec-3] dev.pack.Utils.LoggingInterceptor        : Incoming request [GET] - [/api/v1/user/get-all] - [200]
+2023-06-25T19:12:57.998+07:00  INFO 15828 --- [http-nio-6666-exec-3] dev.pack.Module.User.UserController      : Incoming request [GET] - [/api/v1/user/get-all] - [200]
+2023-06-25T19:12:58.053+07:00  INFO 15828 --- [http-nio-6666-exec-3] dev.pack.Utils.LoggingInterceptor        : Completed request. Method: GET, Path: /api/v1/user/get-all, Response Status: 200 - OK
+2023-06-25T19:16:13.236+07:00 ERROR 15828 --- [http-nio-6666-exec-5] d.p.C.JwtAuthenticationFilter            : Cannot set user authentication: JWT expired at 2023-06-25T12:15:49Z. Current time: 2023-06-25T12:16:13Z, a difference of 24234 milliseconds.  Allowed clock skew: 0 milliseconds.
+2023-06-25T19:16:13.256+07:00 ERROR 15828 --- [http-nio-6666-exec-5] d.p.C.JwtAuthenticationEntryPoint        : Unauthorized error: Full authentication is required to access this resource
+2023-06-25T19:16:18.167+07:00 ERROR 15828 --- [http-nio-6666-exec-7] d.p.C.JwtAuthenticationFilter            : Cannot set user authentication: JWT expired at 2023-06-25T12:15:49Z. Current time: 2023-06-25T12:16:18Z, a difference of 29167 milliseconds.  Allowed clock skew: 0 milliseconds.
+2023-06-25T19:16:18.169+07:00 ERROR 15828 --- [http-nio-6666-exec-7] d.p.C.JwtAuthenticationEntryPoint        : Unauthorized error: Full authentication is required to access this resource
+2023-06-25T19:16:26.333+07:00 ERROR 15828 --- [http-nio-6666-exec-8] d.p.C.JwtAuthenticationFilter            : Cannot set user authentication: JWT expired at 2023-06-25T12:15:49Z. Current time: 2023-06-25T12:16:26Z, a difference of 37333 milliseconds.  Allowed clock skew: 0 milliseconds.
+2023-06-25T19:16:26.334+07:00 ERROR 15828 --- [http-nio-6666-exec-8] d.p.C.JwtAuthenticationEntryPoint        : Unauthorized error: Full authentication is required to access this resource
+2023-06-25T19:16:29.649+07:00 ERROR 15828 --- [http-nio-6666-exec-9] d.p.C.JwtAuthenticationFilter            : Cannot set user authentication: JWT String argument cannot be null or empty.
+2023-06-25T19:16:29.650+07:00  INFO 15828 --- [http-nio-6666-exec-9] dev.pack.Utils.LoggingInterceptor        : Incoming request [POST] - [/api/v1/auth/signIn] - [200]
+2023-06-25T19:16:29.799+07:00  INFO 15828 --- [http-nio-6666-exec-9] dev.pack.Utils.LoggingInterceptor        : Completed request. Method: POST, Path: /api/v1/auth/signIn, Response Status: 200 - OK
+2023-06-25T19:16:37.069+07:00  INFO 15828 --- [http-nio-6666-exec-10] dev.pack.Utils.LoggingInterceptor        : Incoming request [GET] - [/api/v1/user/get-all] - [200]
+2023-06-25T19:16:37.091+07:00  INFO 15828 --- [http-nio-6666-exec-10] dev.pack.Module.User.UserController      : Incoming request [GET] - [/api/v1/user/get-all] - [200]
+2023-06-25T19:16:37.099+07:00  INFO 15828 --- [http-nio-6666-exec-10] dev.pack.Utils.LoggingInterceptor        : Completed request. Method: GET, Path: /api/v1/user/get-all, Response Status: 200 - OK
+2023-06-25T19:16:41.576+07:00  INFO 15828 --- [http-nio-6666-exec-2] dev.pack.Utils.LoggingInterceptor        : Incoming request [POST] - [/api/v1/user/create] - [200]
+2023-06-25T19:16:42.106+07:00  INFO 15828 --- [http-nio-6666-exec-2] dev.pack.Utils.LoggingInterceptor        : Completed request. Method: POST, Path: /api/v1/user/create, Response Status: 201 - Created
+2023-06-25T19:17:02.227+07:00 ERROR 15828 --- [http-nio-6666-exec-1] d.p.C.JwtAuthenticationFilter            : Cannot set user authentication: JWT String argument cannot be null or empty.
+2023-06-25T19:17:02.235+07:00 ERROR 15828 --- [http-nio-6666-exec-1] d.p.C.JwtAuthenticationEntryPoint        : Unauthorized error: Full authentication is required to access this resource
+2023-06-25T19:17:08.132+07:00  INFO 15828 --- [http-nio-6666-exec-3] dev.pack.Utils.LoggingInterceptor        : Incoming request [PUT] - [/api/v1/user/update/20805e4f-1597-41f4-ad21-5b7213d9f9be] - [200]
+2023-06-25T19:17:08.323+07:00  INFO 15828 --- [http-nio-6666-exec-3] dev.pack.Utils.LoggingInterceptor        : Completed request. Method: PUT, Path: /api/v1/user/update/20805e4f-1597-41f4-ad21-5b7213d9f9be, Response Status: 200 - OK
+2023-06-25T19:17:27.903+07:00  INFO 15828 --- [http-nio-6666-exec-4] dev.pack.Utils.LoggingInterceptor        : Incoming request [GET] - [/api/v1/user/get-all] - [200]
+2023-06-25T19:17:27.968+07:00  INFO 15828 --- [http-nio-6666-exec-4] dev.pack.Module.User.UserController      : Incoming request [GET] - [/api/v1/user/get-all] - [200]
+2023-06-25T19:17:27.993+07:00  INFO 15828 --- [http-nio-6666-exec-4] dev.pack.Utils.LoggingInterceptor        : Completed request. Method: GET, Path: /api/v1/user/get-all, Response Status: 200 - OK
+2023-06-25T19:18:06.608+07:00  INFO 15828 --- [http-nio-6666-exec-6] dev.pack.Utils.LoggingInterceptor        : Incoming request [GET] - [/api/v1/user/get-all] - [200]
+2023-06-25T19:18:06.646+07:00  INFO 15828 --- [http-nio-6666-exec-6] dev.pack.Module.User.UserController      : Incoming request [GET] - [/api/v1/user/get-all] - [200]
+2023-06-25T19:18:06.663+07:00  INFO 15828 --- [http-nio-6666-exec-6] dev.pack.Utils.LoggingInterceptor        : Completed request. Method: GET, Path: /api/v1/user/get-all, Response Status: 200 - OK
+2023-06-25T19:18:17.532+07:00  INFO 15828 --- [http-nio-6666-exec-5] dev.pack.Utils.LoggingInterceptor        : Incoming request [DELETE] - [/api/v1/user/delete/14daeed8-ac98-461f-907a-dee8c6cb1d02] - [200]
+2023-06-25T19:18:17.605+07:00  INFO 15828 --- [http-nio-6666-exec-5] dev.pack.Utils.LoggingInterceptor        : Completed request. Method: DELETE, Path: /api/v1/user/delete/14daeed8-ac98-461f-907a-dee8c6cb1d02, Response Status: 200 - OK
+2023-06-25T19:19:17.940+07:00  INFO 15828 --- [http-nio-6666-exec-7] dev.pack.Utils.LoggingInterceptor        : Incoming request [GET] - [/api/v1/user/get-all] - [200]
+2023-06-25T19:19:17.967+07:00  INFO 15828 --- [http-nio-6666-exec-7] dev.pack.Module.User.UserController      : Incoming request [GET] - [/api/v1/user/get-all] - [200]
+2023-06-25T19:19:17.978+07:00  INFO 15828 --- [http-nio-6666-exec-7] dev.pack.Utils.LoggingInterceptor        : Completed request. Method: GET, Path: /api/v1/user/get-all, Response Status: 200 - OK
+2023-06-25T19:19:33.691+07:00 ERROR 15828 --- [http-nio-6666-exec-8] d.p.C.JwtAuthenticationFilter            : Cannot set user authentication: JWT expired at 2023-06-25T12:19:29Z. Current time: 2023-06-25T12:19:33Z, a difference of 4691 milliseconds.  Allowed clock skew: 0 milliseconds.
+2023-06-25T19:19:33.694+07:00 ERROR 15828 --- [http-nio-6666-exec-8] d.p.C.JwtAuthenticationEntryPoint        : Unauthorized error: Full authentication is required to access this resource
+2023-06-25T19:21:03.606+07:00  INFO 15828 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-06-25T19:21:03.721+07:00  INFO 15828 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : Hero-Backend-Pool - Shutdown initiated...
+2023-06-25T19:21:03.752+07:00  INFO 15828 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : Hero-Backend-Pool - Shutdown completed.
+2023-06-25T19:21:54.232+07:00  INFO 15476 --- [restartedMain] dev.pack.HeroBankBackendApplication      : Starting HeroBankBackendApplication using Java 17.0.7 with PID 15476 (D:\Hero-Bank-Backend\target\classes started by IKHSAN in D:\Hero-Bank-Backend)
+2023-06-25T19:21:54.242+07:00  INFO 15476 --- [restartedMain] dev.pack.HeroBankBackendApplication      : No active profile set, falling back to 1 default profile: "default"
+2023-06-25T19:21:54.334+07:00  INFO 15476 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-06-25T19:21:54.334+07:00  INFO 15476 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-06-25T19:21:55.546+07:00  INFO 15476 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-06-25T19:21:55.673+07:00  INFO 15476 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 117 ms. Found 4 JPA repository interfaces.
+2023-06-25T19:21:57.533+07:00  INFO 15476 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 6666 (http)
+2023-06-25T19:21:57.565+07:00  INFO 15476 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-06-25T19:21:57.565+07:00  INFO 15476 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.8]
+2023-06-25T19:21:57.672+07:00  INFO 15476 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-06-25T19:21:57.672+07:00  INFO 15476 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 3338 ms
+2023-06-25T19:21:57.852+07:00  INFO 15476 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-06-25T19:21:57.952+07:00  INFO 15476 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.1.7.Final
+2023-06-25T19:21:58.382+07:00  INFO 15476 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : Hero-Backend-Pool - Starting...
+2023-06-25T19:21:58.784+07:00  INFO 15476 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : Hero-Backend-Pool - Added connection org.postgresql.jdbc.PgConnection@41658e
+2023-06-25T19:21:58.786+07:00  INFO 15476 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : Hero-Backend-Pool - Start completed.
+2023-06-25T19:21:58.852+07:00  INFO 15476 --- [restartedMain] SQL dialect                              : HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2023-06-25T19:22:00.366+07:00  INFO 15476 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-06-25T19:22:00.382+07:00  INFO 15476 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-06-25T19:22:01.182+07:00  WARN 15476 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-06-25T19:22:01.762+07:00  INFO 15476 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2023-06-25T19:22:01.852+07:00  INFO 15476 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 6666 (http) with context path ''
+2023-06-25T19:22:01.872+07:00  INFO 15476 --- [restartedMain] dev.pack.HeroBankBackendApplication      : Started HeroBankBackendApplication in 8.452 seconds (process running for 9.293)
+2023-06-25T19:23:29.131+07:00  INFO 15476 --- [http-nio-6666-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-06-25T19:23:29.132+07:00  INFO 15476 --- [http-nio-6666-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-06-25T19:23:29.133+07:00  INFO 15476 --- [http-nio-6666-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2023-06-25T19:23:29.205+07:00 ERROR 15476 --- [http-nio-6666-exec-1] d.p.C.JwtAuthenticationFilter            : Cannot set user authentication: JWT String argument cannot be null or empty.
+2023-06-25T19:23:29.230+07:00  INFO 15476 --- [http-nio-6666-exec-1] dev.pack.Utils.LoggingInterceptor        : Incoming request [POST] - [/api/v1/auth/signIn] - [200]
+2023-06-25T19:23:29.900+07:00  INFO 15476 --- [http-nio-6666-exec-1] dev.pack.Utils.LoggingInterceptor        : Completed request. Method: POST, Path: /api/v1/auth/signIn, Response Status: 200 - OK
