@@ -1,9 +1,9 @@
 package dev.pack.UserTest;
 
-import dev.pack.Module.User.UserEntity;
-import dev.pack.Module.User.UserRepository;
-import dev.pack.Module.UserInfo.UserInfo;
-import dev.pack.Module.WalletUser.WalletUser;
+import dev.pack.modules.user.UserEntity;
+import dev.pack.modules.user.UserRepository;
+import dev.pack.modules.userInfo.UserInfo;
+import dev.pack.modules.walletUser.WalletUser;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
