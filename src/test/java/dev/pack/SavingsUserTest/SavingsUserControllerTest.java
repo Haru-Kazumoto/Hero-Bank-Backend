@@ -2,12 +2,11 @@ package dev.pack.SavingsUserTest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.pack.configuration.JWTService;
-import dev.pack.modules.savingsUser.SavingsUser;
-import dev.pack.modules.savingsUser.SavingsUserController;
-import dev.pack.modules.savingsUser.SavingsUserService;
+import dev.pack.modules.savingsUser.*;
 import dev.pack.modules.user.UserController;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatchers;
@@ -26,9 +25,10 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.math.BigInteger;
+import java.util.UUID;
 
 import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(controllers = SavingsUserController.class)
 @AutoConfigureMockMvc(addFilters = false)
@@ -59,10 +59,11 @@ public class SavingsUserControllerTest {
     }
 
     @Test
+//    @Disabled
     void shouldCreateSavingsUser() throws Exception {
 
         given(
-                savingsUserService.createSavingsUserBody(ArgumentMatchers.any())
+                savingsUserService.createSavingsUsers(ArgumentMatchers.any())
         ).willAnswer((invocation) -> invocation.getArgument(0));
 
         ResultActions response = mockMvc.perform(
@@ -79,5 +80,72 @@ public class SavingsUserControllerTest {
                 ))
                 .andDo(MockMvcResultHandlers.print());
 
+    }
+
+    @Test
+    @Disabled
+    void shouldUpdateSavingsUser() throws Exception{
+
+        //Act
+        given(
+                savingsUserService.updateSavingsUserById(ArgumentMatchers.any(), savingsUser.getId())
+        ).willAnswer((invocation) -> invocation.getArgument(0));
+
+        ResultActions response = mockMvc.perform(
+                MockMvcRequestBuilders
+                        .put("/api/v1/savings/update-savings/{savingsUser.getId}")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(savingsUser))
+        );
+
+
+        //Assert
+        response.andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath(
+                        "$.title",
+                        CoreMatchers.is("Mau beli keyboard")
+                ));
+    }
+
+    @Test
+//    @Disabled
+    void shouldUpdateSavingsUsers() throws Exception {
+        // Arrange
+        UUID savingsUserId = UUID.randomUUID();
+        SavingsUserDto savingsUserDto = new SavingsUserDto();
+        savingsUserDto.setTitle("Mau beli keyboard");
+
+        SavingsUser savedSavingsUser = new SavingsUser();
+        savedSavingsUser.setId(savingsUserId);
+        savedSavingsUser.setTitle("Mau beli keyboard");
+
+        SavingsUserResponse expectedResponse = new SavingsUserResponse();
+        expectedResponse.setTitle("Mau beli keyboard");
+
+        given(
+                savingsUserService.updateSavingsUserById(
+                        ArgumentMatchers.any(), //Request body
+                        ArgumentMatchers.any() //Request id
+                )
+        ).willReturn(savedSavingsUser);
+
+        // Act
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/v1/savings/update-savings/{id}", savingsUserId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(savingsUserDto)))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath(
+                        "$.title",
+                        CoreMatchers.is("Mau beli keyboard"))
+                )
+                .andExpect(MockMvcResultMatchers.content().json(objectMapper.writeValueAsString(expectedResponse)));
+
+        // Assert
+        Mockito.verify(
+                savingsUserService,
+                Mockito.times(1)).updateSavingsUserById(
+                        ArgumentMatchers.any(),
+                ArgumentMatchers.any()
+        );
     }
 }

@@ -7,8 +7,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -18,18 +17,33 @@ public class SavingsUserController {
     private final SavingsUserService savingsUserService;
     private final ModelMapper modelMapper;
 
-    @PostMapping(path = "create-savings")
-    public ResponseEntity<?> createSavingsUser(@RequestBody @Valid SavingsUserDto savingsUserDto){
-            List<SavingsUser> savingsUserList = Collections.singletonList(
-                    modelMapper.map(savingsUserDto, SavingsUser.class)
-            );
+    @PostMapping(path = "/create-savings")
+    public ResponseEntity<SavingsUserResponse> createSavingsUser(@Valid @RequestBody SavingsUserDto savingsUserDto){
+        SavingsUser mapToEntity = modelMapper.map(savingsUserDto, SavingsUser.class);
+        SavingsUser savedSavingsUser = savingsUserService.createSavingsUser(mapToEntity);
+        SavingsUserResponse response = savingsUserService.convertToResponseDto(savedSavingsUser);
 
-            return ResponseEntity
-                    .status(201)
-                    .body(savingsUserService.createSavingsUserBody(savingsUserList));
+        return ResponseEntity.status(201).body(response);
     }
 
-    @GetMapping(path = "get-all")
+    @PutMapping(path = "/update-savings/{id}")
+    public ResponseEntity<SavingsUserResponse> updateSavingsById(
+            @PathVariable("id") UUID id,
+            @Valid @RequestBody SavingsUserUpdateRequest savingsUserDto
+    ){
+        SavingsUser mapToEntity = modelMapper.map(savingsUserDto, SavingsUser.class);
+        SavingsUser savedSavingsUser = savingsUserService.updateSavingsUserById(mapToEntity, id);
+        SavingsUserResponse response = savingsUserService.convertToResponseDto(savedSavingsUser);
+
+        return ResponseEntity.status(200).body(response);
+    }
+
+    @DeleteMapping(path = "/delete-savings/{id}")
+    public ResponseEntity<?> deleteSavingsById(@PathVariable("id")UUID id){
+        return ResponseEntity.status(200).body(savingsUserService.deleteSavingsUserById(id));
+    }
+
+    @GetMapping(path = "/get-all")
     public ResponseEntity<?> getAllSavingsUser(HttpServletResponse response){
         return ResponseEntity
                 .status(response.getStatus())

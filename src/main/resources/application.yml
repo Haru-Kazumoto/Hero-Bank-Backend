@@ -35,6 +35,3 @@ logging:
   level:
     org.springframework.security: ERROR
     root: INFO
-  file:
-    path: src\main\java\dev\pack\logs\logging-application.log
-    name: logs\logging-application.log

@@ -1,6 +1,6 @@
 package dev.pack.modules.user;
 
-import dev.pack.payload.response.MessageErrorResponse;
+import dev.pack.payload.response.ValidationErrorResponse;
 import dev.pack.payload.response.PayloadResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -62,7 +62,7 @@ public class UserController {
                     );
         } catch (DataIntegrityViolationException ex) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(
-                    new MessageErrorResponse(
+                    new ValidationErrorResponse(
                             HttpStatus.CONFLICT.value(),
                             List.of(ex.getMessage())
                     )
@@ -76,7 +76,7 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.OK).body(userService.deleteUserById(id));
         } catch (NullPointerException err) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                    new MessageErrorResponse(
+                    new ValidationErrorResponse(
                             HttpStatus.CONFLICT.value(),
                             List.of(err.getMessage())
                     )
@@ -100,7 +100,7 @@ public class UserController {
             return ResponseEntity
                     .status(response.getStatus())
                     .body(
-                            new MessageErrorResponse(
+                            new ValidationErrorResponse(
                                     HttpStatus.CONFLICT.value(),
                                     List.of(err.getMessage())
                             )

@@ -9,10 +9,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MessageErrorResponse {
-
+public class ValidationErrorResponse {
     private Integer statusCode;
     private List<String> message;
-
-
 }
