@@ -29,8 +29,6 @@ public class UserInfo{
     @GeneratedValue(generator = "uuid")
     private UUID id;
 
-    private String accountNumber;
-
     @Column(unique = true, nullable = false)
     private String username;
 

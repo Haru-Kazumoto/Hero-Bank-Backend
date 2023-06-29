@@ -3,12 +3,15 @@ package dev.pack.globalException;
 import dev.pack.exception.IdNotFoundException;
 import dev.pack.payload.response.ErrorResponse;
 import dev.pack.payload.response.ValidationErrorResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingPathVariableException;
@@ -25,8 +28,14 @@ import java.util.*;
 @ControllerAdvice
 public class GlobalExceptionHandling extends ResponseEntityExceptionHandler {
 
-    public ResponseEntity<ErrorResponse> handleBadCredentialError(){
-        return null;
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<ErrorResponse> handleBadCredentialError(BadCredentialsException ex){
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .statusResponse(HttpStatus.UNAUTHORIZED.name())
+                .message(ex.getMessage())
+                .build();
+        return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
     }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
@@ -35,7 +44,6 @@ public class GlobalExceptionHandling extends ResponseEntityExceptionHandler {
         ErrorResponse errorResponse = ErrorResponse.builder()
                 .statusResponse("NOT FOUND")
                 .message(ex.getMessage())
-                .timestamp(new Date())
                 .build();
         return new ResponseEntity<>(errorResponse,HttpStatus.NOT_FOUND);
     }

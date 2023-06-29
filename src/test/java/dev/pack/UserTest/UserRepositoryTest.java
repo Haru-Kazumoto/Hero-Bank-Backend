@@ -60,15 +60,14 @@ public class UserRepositoryTest {
 
         UserInfo userInfo = new UserInfo();
         userInfo.setUsername("Testing");
-        userInfo.setAccountNumber(generateAccountNumber());
         userInfo.setJoinAt(new Date());
         userInfo.setPhoneNumber("4123423423");
         userInfo.setIdCardNumber("12983741298371");
         userInfo.setUserEntityId(user);
 
         WalletUser walletUser = new WalletUser();
-        walletUser.setPocketBalance(BigInteger.valueOf(100000));
-        walletUser.setUserBalance(BigInteger.valueOf(1000000));
+        walletUser.setPocketBalance(1000000L);
+        walletUser.setUserBalance(1000000L);
         walletUser.setUserEntityId(user);
 
         user.setUserInfo(userInfo);

@@ -15,7 +15,7 @@ import java.util.List;
 @RequestMapping(path = "/walletUser/")
 public class WalletUserController {
 
-    private final WalletUserService walletUserService;
+    private final WalletUserServiceImpl walletUserServiceImpl;
     private final ModelMapper modelMapper;
 
     @PostMapping(path = "addBalance")
@@ -26,7 +26,7 @@ public class WalletUserController {
         try{
             WalletUser walletUser = modelMapper.map(walletUserDto, WalletUser.class);
 
-            walletUserService.addBalanceForWalletUser(amountBalance, walletUser);
+            walletUserServiceImpl.addBalanceForWalletUser(amountBalance, walletUser);
 
             return ResponseEntity
                     .accepted()
@@ -48,7 +48,7 @@ public class WalletUserController {
 
     @GetMapping(path = "getWallet")
     public ResponseEntity<List<?>> getAllWalletUserData(){
-        return ResponseEntity.ok(walletUserService.getWalletUserData());
+        return ResponseEntity.ok(walletUserServiceImpl.getWalletUserData());
     }
 
 }

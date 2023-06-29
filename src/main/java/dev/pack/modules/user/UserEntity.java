@@ -29,11 +29,14 @@ public class UserEntity implements UserDetails {
     @GeneratedValue( generator = "uuid")
     private UUID id;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String email;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) //Exclude field to write only
     private String pin;
+
+    @Column(unique = true, nullable = false)
+    private String accountId;
 
     @OneToOne(
             mappedBy = "userEntityId",
@@ -60,8 +63,8 @@ public class UserEntity implements UserDetails {
     public void setWalletUser() {
         if(this.walletUser == null){
             this.walletUser = new WalletUser();
-            this.walletUser.setUserBalance(BigInteger.valueOf(0));
-            this.walletUser.setPocketBalance(BigInteger.valueOf(0));
+            this.walletUser.setUserBalance(0L);
+            this.walletUser.setPocketBalance(0L);
             this.walletUser.setUserEntityId(this);
         }
     }

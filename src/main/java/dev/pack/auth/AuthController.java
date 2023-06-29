@@ -27,14 +27,12 @@ public class AuthController {
     private final ModelMapper mapper;
 
     @PostMapping(path = "/signUp")
-    public ResponseEntity<PayloadResponse> register(
-            @RequestBody @Valid RegisterRequest registerRequest,
-            HttpServletResponse response) throws TransactionalException {
+    public ResponseEntity<PayloadResponse> register(@RequestBody @Valid RegisterRequest registerRequest) throws TransactionalException {
 
         UserEntity user = mapper.map(registerRequest, UserEntity.class);
 
         return ResponseEntity
-                .status(response.getStatus())
+                .status(HttpStatus.CREATED)
                 .body(authService.register(user));
     }
 

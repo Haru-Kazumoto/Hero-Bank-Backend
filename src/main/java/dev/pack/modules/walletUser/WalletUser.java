@@ -7,7 +7,6 @@ import dev.pack.modules.user.UserEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.math.BigInteger;
 import java.util.UUID;
 
 @Getter
@@ -27,8 +26,10 @@ public class WalletUser {
     @Id
     @GeneratedValue(generator = "uuid")
     private UUID id;
-    private BigInteger userBalance;
-    private BigInteger pocketBalance;
+    private Long userBalance;
+    private Long pocketBalance;
+
+    private String walletId;
 
     @JsonIgnoreProperties(
             {
@@ -40,7 +41,7 @@ public class WalletUser {
             fetch = FetchType.LAZY
     )
     @JoinColumn(
-            name = "user_id",
+            name = "userEntityId",
             updatable = false
     )
     private UserEntity userEntityId;

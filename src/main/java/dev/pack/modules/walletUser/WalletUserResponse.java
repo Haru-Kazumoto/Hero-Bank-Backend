@@ -5,6 +5,6 @@ import java.util.UUID;
 
 public record WalletUserResponse(
         UUID id,
-        BigInteger userBalance,
-        BigInteger pocketBalance
+        Long userBalance,
+        Long pocketBalance
 ){}

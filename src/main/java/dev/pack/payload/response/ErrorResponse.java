@@ -15,6 +15,5 @@ public class ErrorResponse {
 
     private String statusResponse;
     private String message;
-    private Date timestamp;
 
 }

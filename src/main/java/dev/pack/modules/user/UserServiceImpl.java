@@ -1,6 +1,7 @@
 package dev.pack.modules.user;
 
 import dev.pack.modules.userInfo.UserInfoInfoServiceImpl;
+import dev.pack.utils.Generate;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -19,10 +20,9 @@ import java.util.*;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-
-    //Service dependency
     private final UserInfoInfoServiceImpl userInfoServiceImpl;
     private final BCryptPasswordEncoder passwordEncoder;
+    private final Generate generate;
 
     @Override
     public UserDetails loadUserByUsername(String pin) throws UsernameNotFoundException {
@@ -35,16 +35,24 @@ public class UserServiceImpl implements UserService {
     @Transactional(
             rollbackOn = {
                     DataIntegrityViolationException.class,
-                    RuntimeException.class,
-                    Exception.class,
                     SQLException.class,
                     DuplicateKeyException.class,
                     NullPointerException.class
             })
     public UserEntity createUserBody(UserEntity user){
-        user.setPin(passwordEncoder.encode(user.getPassword())); //Hash pin
-        userInfoServiceImpl.createUserInfoBody(user);
-        return userRepository.save(user);
+        user.setPin(
+                passwordEncoder.encode(user.getPassword()) //Hash pin
+        );
+
+        user.setAccountId(
+                generate.randomIdNumber(15) //Generating random number
+        );
+
+        userInfoServiceImpl.createUserInfoBody(user); //Creating user info body object
+
+        user.getWalletUser().setWalletId(generate.randomIdNumber(12)); //Generate random wallet id
+
+        return userRepository.save(user); //Savings all user body and those relational object though
     }
 
     private Map<String, String> setResponse(UUID id, HttpStatus status, String message) {
