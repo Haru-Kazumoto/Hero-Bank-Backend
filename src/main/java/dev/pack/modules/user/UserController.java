@@ -31,7 +31,7 @@ public class UserController {
     public ResponseEntity<?> getAllUser(
             HttpServletRequest request,
             HttpServletResponse response
-    ){
+    ) {
         List<UserEntity> dataPayload = userService.getAllUser();
 
         LOG.info("Incoming request [{}] - [{}] - [{}]", request.getMethod(), request.getRequestURI(), response.getStatus());
@@ -44,30 +44,6 @@ public class UserController {
                                 dataPayload
                         )
                 );
-    }
-
-    @PostMapping(path = "create")
-    public ResponseEntity<?> createUser(
-            @Valid @RequestBody UserCreateDto user) throws DataIntegrityViolationException {
-        try{
-            UserEntity userEntity = mapper.map(user, UserEntity.class);
-            UserEntity dataPayload = userService.createUserBody(userEntity);
-            return ResponseEntity
-                    .status(HttpStatus.CREATED)
-                    .body(
-                            new PayloadResponse(
-                                    HttpStatus.CREATED,
-                                    dataPayload
-                            )
-                    );
-        } catch (DataIntegrityViolationException ex) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(
-                    new ValidationErrorResponse(
-                            HttpStatus.CONFLICT.value(),
-                            List.of(ex.getMessage())
-                    )
-            );
-        }
     }
 
     @DeleteMapping(path = "delete/{id}")

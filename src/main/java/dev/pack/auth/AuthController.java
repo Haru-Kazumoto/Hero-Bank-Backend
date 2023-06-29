@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,11 +39,9 @@ public class AuthController {
     }
 
     @PostMapping(path = "/signIn")
-    public ResponseEntity<AuthResponse> authenticate(
-            @Valid @RequestBody AuthRequest authRequest,
-            HttpServletResponse response) throws TransactionalException{
+    public ResponseEntity<AuthResponse> authenticate(@Valid @RequestBody AuthRequest authRequest) throws TransactionalException{
         return ResponseEntity
-                .status(response.getStatus())
+                .status(HttpStatus.CREATED)
                 .body(authService.authenticate(authRequest));
     }
 

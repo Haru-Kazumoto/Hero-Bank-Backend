@@ -25,6 +25,10 @@ import java.util.*;
 @ControllerAdvice
 public class GlobalExceptionHandling extends ResponseEntityExceptionHandler {
 
+    public ResponseEntity<ErrorResponse> handleBadCredentialError(){
+        return null;
+    }
+
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(IdNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleObjectNotFound(IdNotFoundException ex){

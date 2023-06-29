@@ -12,24 +12,21 @@ public class IdCardNumberValidator implements ConstraintValidator<IdCardNumber, 
 
     private final UserInfoRepository userInfoRepository;
 
-    private static final String PREFIX_ID = "3725";
+    private static final String PREFIX_ID = "3275";
     private static final int CHAR_LENGTH = 16;
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext constraintValidatorContext) {
-        if(value == null){
-            return true;
-        }
+        if (value == null) return true; // Let @NotNull handle it
+        if (value.length() != CHAR_LENGTH || !value.matches("\\d+")) return false;
+        if (!value.startsWith(PREFIX_ID)) return false;
 
-        return value.length() == CHAR_LENGTH
-                && value.startsWith(PREFIX_ID)
-                && value.matches("\\d+")
-                && isUnique(value);
+        return isUnique(value);
     }
 
-    public boolean isUnique(String value){
+    private boolean isUnique(String value) {
         UserInfo isIdCardUser = userInfoRepository.findUserInfoByIdCardNumber(value);
 
-        return isIdCardUser == null; //If true it'll be error
+        return isIdCardUser == null;
     }
 }

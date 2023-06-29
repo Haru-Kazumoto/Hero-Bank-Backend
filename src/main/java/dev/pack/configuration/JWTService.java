@@ -55,6 +55,7 @@ public class JWTService {
             return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
         } catch (MalformedJwtException e) {
             log.error("Invalid JWT token: {}", e.getMessage());
+            throw new MalformedJwtException("Missing or malformed jwt");
         } catch (ExpiredJwtException e) {
             log.error("JWT token is expired: {}", e.getMessage());
         } catch (UnsupportedJwtException e) {

@@ -63,6 +63,7 @@ public class UserRepositoryTest {
         userInfo.setAccountNumber(generateAccountNumber());
         userInfo.setJoinAt(new Date());
         userInfo.setPhoneNumber("4123423423");
+        userInfo.setIdCardNumber("12983741298371");
         userInfo.setUserEntityId(user);
 
         WalletUser walletUser = new WalletUser();
