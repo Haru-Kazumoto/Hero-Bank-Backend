@@ -86,14 +86,15 @@ public class SavingsUserControllerTest {
     @Disabled
     void shouldUpdateSavingsUser() throws Exception{
 
+        UUID savingsId = savingsUser.getId();
         //Act
         given(
-                savingsUserService.updateSavingsUserById(ArgumentMatchers.any(), savingsUser.getId())
+                savingsUserService.updateSavingsUserById(ArgumentMatchers.any(), savingsId)
         ).willAnswer((invocation) -> invocation.getArgument(0));
 
         ResultActions response = mockMvc.perform(
                 MockMvcRequestBuilders
-                        .put("/api/v1/savings/update-savings/{savingsUser.getId}")
+                        .put(String.format("/api/v1/savings/update-savings/%s", savingsId))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(savingsUser))
         );

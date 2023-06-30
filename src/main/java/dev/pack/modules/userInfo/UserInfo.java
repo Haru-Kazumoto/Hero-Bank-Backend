@@ -43,7 +43,7 @@ public class UserInfo{
     private Date joinAt;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "userEntity_id", updatable = false)
+    @JoinColumn(name = "userId", updatable = false)
     private UserEntity userEntityId;
 
     @PrePersist

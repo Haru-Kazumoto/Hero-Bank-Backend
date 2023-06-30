@@ -3,8 +3,6 @@ package dev.pack.globalException;
 import dev.pack.exception.IdNotFoundException;
 import dev.pack.payload.response.ErrorResponse;
 import dev.pack.payload.response.ValidationErrorResponse;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -59,7 +57,7 @@ public class GlobalExceptionHandling extends ResponseEntityExceptionHandler {
     }
 
     @ResponseStatus(HttpStatus.CONFLICT)
-    @ExceptionHandler(DataIntegrityViolationException.class)
+//    @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<ValidationErrorResponse> handleDataIntegrityViolationException(
             DataIntegrityViolationException ex
     ) {
@@ -107,7 +105,6 @@ public class GlobalExceptionHandling extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(response, headers, status);
     }
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @Override
     protected ResponseEntity<Object> handleNoHandlerFoundException(
             NoHandlerFoundException ex,

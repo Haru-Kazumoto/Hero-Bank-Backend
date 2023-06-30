@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface WalletUserService {
 
-    WalletUser addBalance(WalletUser walletUser);
+    WalletUser topUpBalance(WalletUser walletUser);
     List<WalletUser> getAllWalletUser();
 
 }

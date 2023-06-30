@@ -35,3 +35,10 @@ logging:
   level:
     org.springframework.security: ERROR
     root: INFO
+
+#Wallet rules
+wallet-user:
+  balance:
+    request:
+      max: 50000000
+      min: 100000

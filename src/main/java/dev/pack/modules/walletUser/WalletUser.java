@@ -29,6 +29,7 @@ public class WalletUser {
     private Long userBalance;
     private Long pocketBalance;
 
+//    @Column(unique = true, nullable = false)
     private String walletId;
 
     @JsonIgnoreProperties(
@@ -41,7 +42,6 @@ public class WalletUser {
             fetch = FetchType.LAZY
     )
     @JoinColumn(
-            name = "userEntityId",
             updatable = false
     )
     private UserEntity userEntityId;
