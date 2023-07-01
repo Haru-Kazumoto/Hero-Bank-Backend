@@ -1,5 +1,6 @@
 package dev.pack.modules.walletUser;
 
+import dev.pack.modules.payment.Payments;
 import dev.pack.payload.response.TransactionErrorResponse;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -19,7 +20,8 @@ public class WalletUserController {
     private final ModelMapper modelMapper;
 
     @PostMapping(path = "addBalance")
-    public ResponseEntity<?> addBalanceWallet(@RequestBody WalletUserDto walletUserDto){
+    public ResponseEntity<?> addBalanceWallet(@RequestBody Payments.TopUpPaymentRequest requestPayment){
+        Payments.TopUpPaymentReceipt body = modelMapper.map(requestPayment, Payments.TopUpPaymentReceipt.class);
         return null;
     }
 

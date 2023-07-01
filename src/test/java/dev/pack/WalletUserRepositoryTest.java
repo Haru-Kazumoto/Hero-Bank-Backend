@@ -40,7 +40,7 @@ public class WalletUserRepositoryTest {
     void shouldReturnWalletUser() {
         walletUserRepository.save(walletUser);
         WalletUser findWalletUserByWalletId = walletUserRepository
-                .findWalletUserByWalletId(walletUser.getWalletId())
+                .findByWalletId(walletUser.getWalletId())
                 .orElseThrow(() -> new NoSuchElementException("Wallet id not found."));
 
         System.out.println(findWalletUserByWalletId);

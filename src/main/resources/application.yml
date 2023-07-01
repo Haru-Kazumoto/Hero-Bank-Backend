@@ -31,6 +31,7 @@ security:
   jwt:
     secret-key: 6B5970337336763979244226452948404D6351665468576D5A7134743777217A
 
+#Logging config
 logging:
   level:
     org.springframework.security: ERROR
@@ -40,5 +41,5 @@ logging:
 wallet-user:
   balance:
     request:
-      max: 50000000
+      max: 2000000
       min: 100000

@@ -1,7 +1,6 @@
 package dev.pack.modules.walletUser;
 
 import dev.pack.exception.IdNotFoundException;
-import dev.pack.exception.MaximumValueBalanceException;
 import dev.pack.utils.Generate;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +24,6 @@ public class WalletUserServiceImpl implements WalletUserService{
 
     @Override
     @Transactional(rollbackOn = {
-            MaximumValueBalanceException.class,
             NullPointerException.class,
             IdNotFoundException.class,
             Exception.class
