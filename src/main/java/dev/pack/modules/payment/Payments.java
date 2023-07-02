@@ -3,6 +3,7 @@ package dev.pack.modules.payment;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import dev.pack.enums.PaymentOutlets;
+import dev.pack.modules.user.UserEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
@@ -33,7 +34,7 @@ public class Payments {
     @NoArgsConstructor
     @Table(name = "history_topup_payment")
     @Entity
-    public static class TopUpPaymentReceipt{ //For result and history payment.
+    public static class TopUpPaymentHistory{ //For result and history payment.
         @Id @GeneratedValue
         @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) //Exclude
         private UUID id;
@@ -44,6 +45,10 @@ public class Payments {
 
         @JsonFormat(pattern = "dd-MM-yyyy HH:mm")
         private Date topUpDate = new Date();
+
+        @ManyToOne(fetch = FetchType.LAZY)
+        @JoinColumn(name = "userEntityId")
+        private UserEntity userEntityId;
 
         @PrePersist
         public void setTopUpDate() {

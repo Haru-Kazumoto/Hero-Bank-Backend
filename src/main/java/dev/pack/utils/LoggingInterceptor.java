@@ -19,10 +19,9 @@ public class LoggingInterceptor implements HandlerInterceptor {
             Object handler
     ) throws Exception {
         log.info(
-                "Incoming request [{}] - [{}] - [{}]",
+                "Incoming request [{}] - [{}]",
                 request.getMethod(),
-                request.getServletPath(),
-                response.getStatus()
+                request.getServletPath()
         );
         return true;
     }

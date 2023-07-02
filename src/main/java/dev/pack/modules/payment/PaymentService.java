@@ -2,6 +2,7 @@ package dev.pack.modules.payment;
 
 import dev.pack.enums.PaymentOutlets;
 import dev.pack.exception.PaymentBalanceErrorException;
+import dev.pack.exception.UnsupportedPaymentPlatformException;
 import dev.pack.modules.walletUser.WalletUser;
 import dev.pack.modules.walletUser.WalletUserRepository;
 import jakarta.transaction.Transactional;
@@ -10,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.NoSuchElementException;
 
 @Service
@@ -17,7 +19,8 @@ import java.util.NoSuchElementException;
 public class PaymentService {
 
     private final WalletUserRepository walletUserRepository;
-    private final TopUpPaymentRepository topUpPaymentRepository;
+    private final TopUpPaymentHistoryRepository topUpPaymentHistoryRepository;
+
     @Value("${wallet-user.balance.request.max}")
     Long MAX_REQUEST_BALANCE;
 
@@ -30,33 +33,31 @@ public class PaymentService {
             PaymentBalanceErrorException.class,
             NoSuchElementException.class
     })
-    public Payments.TopUpPaymentReceipt topUpBalance(Payments.TopUpPaymentRequest requestPayment){
+    public Payments.TopUpPaymentHistory topUpBalance(Payments.TopUpPaymentRequest requestPayment){
         try{
-            //This condition has a bug.
-//            if(requestPayment.getAmount() > MAX_REQUEST_BALANCE){
-//                throw new PaymentBalanceErrorException(String.format("Maximum top up reached! (%s)", requestPayment.getAmount()));
-//            }
-//            if(requestPayment.getAmount() < MIN_REQUEST_BALANCE){
-//                throw new PaymentBalanceErrorException(String.format("Minimum top up reached! (%s)", requestPayment.getAmount()));
-//            }
-
             WalletUser walletUser = walletUserRepository
                     .findByWalletId(requestPayment.getWalletId())
                     .orElseThrow(() -> new NoSuchElementException("Wallet id not found!"));
 
-            Long currentBalance = walletUser.getUserBalance();
+            Long currentBalanceUser = walletUser.getUserBalance();
             Long topUpAmount = requestPayment.getAmount();
-            Long resultTopUpPaymentBalance = currentBalance + topUpAmount;
+            Long resultTopUpPaymentBalance = currentBalanceUser + topUpAmount;
+
+            validateAmountRequest(topUpAmount);
+
+            //Check the outlet is the outlet support for hero bank payment
+            if(!Arrays.asList(PaymentOutlets.values()).contains(requestPayment.getOutlet())){
+                throw new UnsupportedPaymentPlatformException("The platform doesn't support for hero bank payment!");
+            }
 
             walletUser.setUserBalance(resultTopUpPaymentBalance);
-
             walletUserRepository.save(walletUser); //Add balance user to wallet user.
 
-            Payments.TopUpPaymentReceipt response = new Payments.TopUpPaymentReceipt();
+            Payments.TopUpPaymentHistory response = new Payments.TopUpPaymentHistory();
             response.setOutletName(requestPayment.getOutlet());
             response.setTotalTopUpAmount(requestPayment.getAmount());
 
-            topUpPaymentRepository.save(response); //Store the history payment.
+            topUpPaymentHistoryRepository.save(response); //Store the history payment.
 
             return response;
         } catch (TransactionalException exception){
@@ -65,5 +66,12 @@ public class PaymentService {
     }
 
 
-
+    @Transactional(rollbackOn = PaymentBalanceErrorException.class)
+    public void validateAmountRequest(Long amount){
+        if(amount > MAX_REQUEST_BALANCE){
+            throw new PaymentBalanceErrorException("Maximum top up balance value reached!");
+        } else if(amount < MIN_REQUEST_BALANCE) {
+            throw new PaymentBalanceErrorException("Minimum top up balance value reached!");
+        }
+    }
 }

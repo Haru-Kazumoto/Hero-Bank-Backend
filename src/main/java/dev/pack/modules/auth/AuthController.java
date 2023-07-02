@@ -1,11 +1,10 @@
-package dev.pack.auth;
+package dev.pack.modules.auth;
 
 import dev.pack.payload.request.AuthRequest;
 import dev.pack.payload.request.RegisterRequest;
 import dev.pack.payload.response.AuthResponse;
 import dev.pack.payload.response.PayloadResponse;
 import dev.pack.modules.user.UserEntity;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.TransactionalException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -39,7 +38,7 @@ public class AuthController {
     @PostMapping(path = "/signIn")
     public ResponseEntity<AuthResponse> authenticate(@Valid @RequestBody AuthRequest authRequest) throws TransactionalException{
         return ResponseEntity
-                .status(HttpStatus.CREATED)
+                .status(HttpStatus.ACCEPTED)
                 .body(authService.authenticate(authRequest));
     }
 

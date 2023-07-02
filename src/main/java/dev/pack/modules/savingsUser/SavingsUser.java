@@ -29,6 +29,8 @@ public class SavingsUser {
     private String title;
     private Long savingsBalance;
     private Long collectedPlans;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private UUID userId; //Untuk merepresentasikan id dari user.
 
     @ManyToOne(fetch = FetchType.LAZY)

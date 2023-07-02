@@ -1,6 +1,7 @@
 package dev.pack.globalException;
 
 import dev.pack.exception.IdNotFoundException;
+import dev.pack.exception.UnsupportedPaymentPlatformException;
 import dev.pack.payload.response.ErrorResponse;
 import dev.pack.payload.response.ValidationErrorResponse;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -8,11 +9,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.MissingPathVariableException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -26,6 +26,17 @@ import java.util.*;
 @ControllerAdvice
 public class GlobalExceptionHandling extends ResponseEntityExceptionHandler {
 
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(UnsupportedPaymentPlatformException.class)
+    public ResponseEntity<ErrorResponse> handleUnsupportedPaymentPlatforms(UnsupportedPaymentPlatformException ex){
+        ErrorResponse response = ErrorResponse.builder()
+                .statusResponse(HttpStatus.BAD_REQUEST.name())
+                .message(ex.getMessage())
+                .build();
+
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<ErrorResponse> handleBadCredentialError(BadCredentialsException ex){
@@ -36,28 +47,32 @@ public class GlobalExceptionHandling extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
     }
 
+    @Override
+    protected ResponseEntity<Object> handleHttpMessageNotReadable(
+            HttpMessageNotReadableException ex,
+            HttpHeaders headers,
+            HttpStatusCode status,
+            WebRequest request
+    ) {
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .statusResponse(status.toString())
+                .message(ex.getMessage())
+                .build();
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(IdNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleObjectNotFound(IdNotFoundException ex){
+    public ResponseEntity<ErrorResponse> handleObjectNotFound(IdNotFoundException ex) {
         ErrorResponse errorResponse = ErrorResponse.builder()
                 .statusResponse("NOT FOUND")
                 .message(ex.getMessage())
                 .build();
-        return new ResponseEntity<>(errorResponse,HttpStatus.NOT_FOUND);
-    }
-
-    @Override
-    protected ResponseEntity<Object> handleMissingPathVariable(MissingPathVariableException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
-        return super.handleMissingPathVariable(ex, headers, status, request);
-    }
-
-    @Override
-    protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
-        return super.handleHttpRequestMethodNotSupported(ex, headers, status, request);
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
     @ResponseStatus(HttpStatus.CONFLICT)
-//    @ExceptionHandler(DataIntegrityViolationException.class)
+    @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<ValidationErrorResponse> handleDataIntegrityViolationException(
             DataIntegrityViolationException ex
     ) {

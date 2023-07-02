@@ -28,14 +28,8 @@ public class UserController {
     private final ModelMapper mapper;
 
     @GetMapping(path = "get-all")
-    public ResponseEntity<?> getAllUser(
-            HttpServletRequest request,
-            HttpServletResponse response
-    ) {
+    public ResponseEntity<?> getAllUser() {
         List<UserEntity> dataPayload = userService.getAllUser();
-
-        LOG.info("Incoming request [{}] - [{}] - [{}]", request.getMethod(), request.getRequestURI(), response.getStatus());
-
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(

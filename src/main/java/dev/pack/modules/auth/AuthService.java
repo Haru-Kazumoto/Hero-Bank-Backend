@@ -1,4 +1,4 @@
-package dev.pack.auth;
+package dev.pack.modules.auth;
 
 import dev.pack.configuration.JWTService;
 import dev.pack.payload.request.AuthRequest;

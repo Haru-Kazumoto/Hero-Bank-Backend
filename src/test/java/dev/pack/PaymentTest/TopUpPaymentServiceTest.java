@@ -3,7 +3,7 @@ package dev.pack.PaymentTest;
 import dev.pack.enums.PaymentOutlets;
 import dev.pack.modules.payment.PaymentService;
 import dev.pack.modules.payment.Payments;
-import dev.pack.modules.payment.TopUpPaymentRepository;
+import dev.pack.modules.payment.TopUpPaymentHistoryRepository;
 import dev.pack.modules.walletUser.WalletUser;
 import dev.pack.modules.walletUser.WalletUserRepository;
 import org.junit.jupiter.api.Assertions;
@@ -23,7 +23,7 @@ public class TopUpPaymentServiceTest {
     WalletUserRepository walletUserRepository;
 
     @Mock
-    TopUpPaymentRepository topUpPaymentRepository;
+    TopUpPaymentHistoryRepository topUpPaymentHistoryRepository;
 
     @InjectMocks
     PaymentService paymentService;
@@ -46,18 +46,18 @@ public class TopUpPaymentServiceTest {
         ).thenReturn(optionalWalletUser);
 
         // Mocking the top-up receipt
-        Payments.TopUpPaymentReceipt topUpReceipt = new Payments.TopUpPaymentReceipt();
+        Payments.TopUpPaymentHistory topUpReceipt = new Payments.TopUpPaymentHistory();
 
         // Mocking the repository save method
         Mockito.when(
                 walletUserRepository.save(Mockito.any())
         ).thenReturn(walletUser);
         Mockito.when(
-                topUpPaymentRepository.save(Mockito.any())
+                topUpPaymentHistoryRepository.save(Mockito.any())
         ).thenReturn(topUpReceipt);
 
         // Calling the topUpBalance method
-        Payments.TopUpPaymentReceipt response = paymentService.topUpBalance(requestPayment);
+        Payments.TopUpPaymentHistory response = paymentService.topUpBalance(requestPayment);
 
         // Verifying the result
         Assertions.assertEquals(200000L, walletUser.getUserBalance());
