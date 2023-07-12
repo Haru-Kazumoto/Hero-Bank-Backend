@@ -1,0 +1,21 @@
+TASK HERO BANK:
+
+Model : User
+Todo:
+-update method recordnya itu ada bug karna abis di tambahin fitur baru yaitu penambahan field
+ accountId, jadi nanti request update nya jangan di sertain atau jangan di ubah
+ accountId nya karna itu auto generate dari method.
+
+Model : Savings user
+Todo: 
+-ubah get all nya itu jadi get data nya berdasarkan id atau account id nya
+ si user yang lagi login, jadi nanti hanya ditampilkan savings dari akun tersebut
+-update savings user ada bug tuh, setiap mau update dan udah dimasukin id yang bener
+ malah not found terus, kayanya error logic.
+
+Model: TopPaymentHistory
+Todo : [DONE]
+-perubahan fitur yaitu ambil accountId dari user aja biar gampang gausah relasi relasi lagian juga kalo relasi nanti
+ body user nya bala, jadi nanti pas request top up si user harus masukin accountId nya juga, nah nanti result payment nya
+ ambil accountId nya yang request. Nah nanti pas di front end nya pas dia mau buka history payment nya, nanti di fe ambil accountId yang sekarang lagi
+ login (session) OK?

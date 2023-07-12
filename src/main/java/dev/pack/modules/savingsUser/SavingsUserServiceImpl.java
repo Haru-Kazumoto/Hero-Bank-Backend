@@ -42,7 +42,7 @@ public class SavingsUserServiceImpl implements SavingsUserService {
     public SavingsUser updateSavingsUserById(SavingsUser savingsUser, UUID savingsUserId) {
         SavingsUser savingsData = savingsUserRepository
                 .findById(savingsUserId)
-                .orElseThrow(() -> new NoSuchElementException(String.format("Id user [%s] not found.", savingsUserId)));
+                .orElseThrow(() -> new IdNotFoundException(String.format("Id user [%s] not found.", savingsUserId)));
 
         savingsData.setTitle(savingsUser.getTitle());
         savingsData.setCollectedPlans(savingsUser.getCollectedPlans());

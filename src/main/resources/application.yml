@@ -43,3 +43,12 @@ wallet-user:
     request:
       max: 2000000
       min: 100000
+
+#Payment
+payment:
+  top-up:
+    history:
+      prefix-history-id: HBT
+      char: 123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ
+      length-history-id: 20
+

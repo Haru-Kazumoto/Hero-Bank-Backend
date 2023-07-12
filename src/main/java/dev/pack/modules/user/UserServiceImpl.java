@@ -1,5 +1,8 @@
 package dev.pack.modules.user;
 
+import dev.pack.exception.IdNotFoundException;
+import dev.pack.modules.payment.topup.TopUpPaymentHistoryRepository;
+import dev.pack.modules.payment.topup.TopUpPayments;
 import dev.pack.modules.userInfo.UserInfoInfoServiceImpl;
 import dev.pack.utils.Generate;
 import jakarta.transaction.Transactional;
@@ -23,6 +26,7 @@ public class UserServiceImpl implements UserService {
     private final UserInfoInfoServiceImpl userInfoServiceImpl;
     private final BCryptPasswordEncoder passwordEncoder;
     private final Generate generate;
+    private final TopUpPaymentHistoryRepository topUpPaymentHistoryRepository;
 
     @Override
     public UserDetails loadUserByUsername(String pin) throws UsernameNotFoundException {
@@ -101,4 +105,8 @@ public class UserServiceImpl implements UserService {
 
         return userRepository.save(user);
     }
+
+    //TODO : create method change store balance user to savings user.
+    //TODO : create method change store balance user to pocket user.
+    //TODO : create method that could take balance from savings.
 }

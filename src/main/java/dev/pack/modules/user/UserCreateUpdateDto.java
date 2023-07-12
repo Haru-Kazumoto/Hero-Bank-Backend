@@ -16,7 +16,7 @@ public class UserCreateUpdateDto {
     @NotEmpty(message = "Pin is required for updating data.")
     private String pin;
 
-    @NotEmpty(message = "Emai is required for updating data.")
+    @NotEmpty(message = "Email is required for updating data.")
     @Email(message = "Email pattern doesn't valid")
     private String email;
 }
