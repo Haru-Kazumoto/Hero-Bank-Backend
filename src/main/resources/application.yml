@@ -19,6 +19,7 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
     database: postgresql
+#    open-in-view: false
 
 #Server configuration
 server:
@@ -52,3 +53,6 @@ payment:
       char: 123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ
       length-history-id: 20
 
+#CORS
+cors:
+  path: http://localhost:3000

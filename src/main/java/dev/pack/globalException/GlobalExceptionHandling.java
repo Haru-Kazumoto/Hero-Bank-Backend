@@ -1,6 +1,7 @@
 package dev.pack.globalException;
 
 import dev.pack.exception.IdNotFoundException;
+import dev.pack.exception.MissMatchException;
 import dev.pack.exception.UnsupportedPaymentPlatformException;
 import dev.pack.payload.response.ErrorResponse;
 import dev.pack.payload.response.ValidationErrorResponse;
@@ -25,6 +26,16 @@ import java.util.*;
 
 @ControllerAdvice
 public class GlobalExceptionHandling extends ResponseEntityExceptionHandler {
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(MissMatchException.class)
+    public ResponseEntity<ErrorResponse> handleMissMatchException(MissMatchException ex){
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .statusResponse(HttpStatus.NOT_FOUND.name())
+                .message(ex.getMessage())
+                .build();
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(UnsupportedPaymentPlatformException.class)

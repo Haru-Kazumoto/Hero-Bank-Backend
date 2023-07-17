@@ -14,5 +14,4 @@ public class SavingsUserResponse {
     private String title;
     private Long savingsBalance;
     private Long collectedPlans;
-    private UUID userId;
 }

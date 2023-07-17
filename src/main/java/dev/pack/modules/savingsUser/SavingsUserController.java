@@ -7,6 +7,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -18,8 +19,8 @@ public class SavingsUserController {
     private final ModelMapper modelMapper;
 
     @PostMapping(path = "/create-savings")
-    public ResponseEntity<SavingsUserResponse> createSavingsUser(@Valid @RequestBody SavingsUserDto savingsUserDto){
-        SavingsUser mapToEntity = modelMapper.map(savingsUserDto, SavingsUser.class);
+    public ResponseEntity<SavingsUserResponse> createSavingsUser(@Valid @RequestBody SavingsUserRequest savingsUserRequest){
+        SavingsUser mapToEntity = modelMapper.map(savingsUserRequest, SavingsUser.class);
         SavingsUser savedSavingsUser = savingsUserService.createSavingsUser(mapToEntity);
         SavingsUserResponse response = savingsUserService.convertToResponseDto(savedSavingsUser);
 
@@ -43,10 +44,15 @@ public class SavingsUserController {
         return ResponseEntity.status(200).body(savingsUserService.deleteSavingsUserById(id));
     }
 
-    @GetMapping(path = "/get-all")
+    @GetMapping(path = "/get-savings")
     public ResponseEntity<?> getAllSavingsUser(HttpServletResponse response){
         return ResponseEntity
                 .status(response.getStatus())
                 .body(savingsUserService.getAllRecord());
+    }
+
+    @GetMapping(path = "/get-savings/user-id/{userId}")
+    public ResponseEntity<List<SavingsUser>> getSavingsUserByUserId(@PathVariable("userId") UUID userId){
+        return ResponseEntity.status(200).body(savingsUserService.getSavingsUserByIdUser(userId));
     }
 }

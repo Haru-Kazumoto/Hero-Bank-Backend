@@ -1,6 +1,6 @@
 package dev.pack.enums;
 
-public enum PaymentOutlets {
+public enum OutletPaymentsEnum {
     ALFAMART,
     INDOMART,
     SEVENELEVEN

@@ -1,9 +1,7 @@
 package dev.pack.modules.user;
 
-import dev.pack.modules.payment.topup.TopUpPayments;
 import dev.pack.payload.response.ValidationErrorResponse;
 import dev.pack.payload.response.PayloadResponse;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

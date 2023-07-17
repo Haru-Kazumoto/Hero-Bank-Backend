@@ -1,8 +1,6 @@
 package dev.pack.modules.user;
 
-import dev.pack.exception.IdNotFoundException;
-import dev.pack.modules.payment.topup.TopUpPaymentHistoryRepository;
-import dev.pack.modules.payment.topup.TopUpPayments;
+import dev.pack.modules.payment.paymentNotification.TopUpPaymentHistoryRepository;
 import dev.pack.modules.userInfo.UserInfoInfoServiceImpl;
 import dev.pack.utils.Generate;
 import jakarta.transaction.Transactional;

@@ -18,11 +18,6 @@ public class SavingsUserServiceImpl implements SavingsUserService {
     private final UserRepository userRepository;
 
     @Override
-    public List<SavingsUser> createSavingsUsers(List<SavingsUser> savingsUsers) {
-        return savingsUserRepository.saveAll(savingsUsers);
-    }
-
-    @Override
     public SavingsUser createSavingsUser(SavingsUser savingsUser) {
         UserEntity userId = userRepository
                 .findById(savingsUser.getUserId())
@@ -36,6 +31,16 @@ public class SavingsUserServiceImpl implements SavingsUserService {
     @Override
     public List<SavingsUser> getAllRecord() {
         return savingsUserRepository.findAll();
+    }
+
+    @Override
+    public List<SavingsUser> getSavingsUserByIdUser(UUID userId) {
+        List<SavingsUser> id_user = savingsUserRepository.findSavingsUserByUserId(userId);
+        if(id_user == null){
+            throw new IdNotFoundException("User id is not found.");
+        }
+
+        return id_user.isEmpty() ? List.of() : id_user;
     }
 
     @Override
@@ -67,13 +72,18 @@ public class SavingsUserServiceImpl implements SavingsUserService {
     }
 
     @Override
+    public SavingsUser addSavingsBalanceFromUserBalance(SavingsUser savingsUser) {
+
+        return null;
+    }
+
+    @Override
     public SavingsUserResponse convertToResponseDto(SavingsUser savingsUser) {
         SavingsUserResponse responseDto = new SavingsUserResponse();
         responseDto.setId(savingsUser.getId());
         responseDto.setTitle(savingsUser.getTitle());
         responseDto.setCollectedPlans(savingsUser.getCollectedPlans());
         responseDto.setSavingsBalance(savingsUser.getSavingsBalance());
-        responseDto.setUserId(savingsUser.getUserId());
         return responseDto;
     }
 }

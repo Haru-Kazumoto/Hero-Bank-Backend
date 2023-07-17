@@ -40,10 +40,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             jwt = parseJwt(request);
             userEmail = jwtService.extractUserEmail(jwt);
 
-            //Check is user has already connected (authenticated)
             if(userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null){
                 UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
-                //Also check the token is valid and then authenticating the credential
                 if(jwtService.isTokenValid(jwt, userDetails)){
                     UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                             userDetails,

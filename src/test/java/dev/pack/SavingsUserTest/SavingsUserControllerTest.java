@@ -3,7 +3,6 @@ package dev.pack.SavingsUserTest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.pack.configuration.JWTService;
 import dev.pack.modules.savingsUser.*;
-import dev.pack.modules.user.UserController;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -22,13 +21,11 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.UUID;
 
 import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(controllers = SavingsUserController.class)
 @AutoConfigureMockMvc(addFilters = false)
@@ -56,30 +53,6 @@ public class SavingsUserControllerTest {
                 .title("Mau beli keyboard")
                 .savingsBalance(1000000L)
                 .build();
-    }
-
-    @Test
-//    @Disabled
-    void shouldCreateSavingsUser() throws Exception {
-
-        given(
-                savingsUserService.createSavingsUsers(ArgumentMatchers.any())
-        ).willAnswer((invocation) -> invocation.getArgument(0));
-
-        ResultActions response = mockMvc.perform(
-                MockMvcRequestBuilders
-                        .post("/api/v1/savings/create-savings")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(savingsUser))
-        );
-
-        response.andExpect(MockMvcResultMatchers.status().isCreated())
-                .andExpect(MockMvcResultMatchers.jsonPath(
-                        "$.length()",
-                        CoreMatchers.is(1)
-                ))
-                .andDo(MockMvcResultHandlers.print());
-
     }
 
     @Test
@@ -113,8 +86,8 @@ public class SavingsUserControllerTest {
     void shouldUpdateSavingsUsers() throws Exception {
         // Arrange
         UUID savingsUserId = UUID.randomUUID();
-        SavingsUserDto savingsUserDto = new SavingsUserDto();
-        savingsUserDto.setTitle("Mau beli keyboard");
+        SavingsUserRequest savingsUserRequest = new SavingsUserRequest();
+        savingsUserRequest.setTitle("Mau beli keyboard");
 
         SavingsUser savedSavingsUser = new SavingsUser();
         savedSavingsUser.setId(savingsUserId);
@@ -133,7 +106,7 @@ public class SavingsUserControllerTest {
         // Act
         mockMvc.perform(MockMvcRequestBuilders.put("/api/v1/savings/update-savings/{id}", savingsUserId)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(savingsUserDto)))
+                        .content(objectMapper.writeValueAsString(savingsUserRequest)))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath(
                         "$.title",
