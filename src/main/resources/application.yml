@@ -1,7 +1,7 @@
 #Database connection configuration
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/Hero-bank-db
+    url: jdbc:postgresql://localhost:5432/Hero Bank DB
     username: postgres
     password: admin
     hikari:

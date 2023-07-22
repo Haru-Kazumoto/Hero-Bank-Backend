@@ -87,7 +87,7 @@ public class SavingsUserControllerTest {
         // Arrange
         UUID savingsUserId = UUID.randomUUID();
         SavingsUserRequest savingsUserRequest = new SavingsUserRequest();
-        savingsUserRequest.setTitle("Mau beli keyboard");
+//        savingsUserRequest.setTitle("Mau beli keyboard");
 
         SavingsUser savedSavingsUser = new SavingsUser();
         savedSavingsUser.setId(savingsUserId);

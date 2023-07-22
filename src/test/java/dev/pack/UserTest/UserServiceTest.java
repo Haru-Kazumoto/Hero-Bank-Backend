@@ -29,51 +29,51 @@ public class UserServiceTest {
     @InjectMocks
     private UserServiceImpl userService;
 
-    @Test
-    @Disabled
-    void shouldCreateUserWithTheRelationObject() {
-        //Arrange
-        UserEntity user = new UserEntity();
-        user.setPin("123456");
-        user.setEmail("TestingEmail@gmail.com");
-
-        UserInfo userInfo = new UserInfo();
-        userInfo.setUsername("Testing");
-        userInfo.setJoinAt(new Date());
-        userInfo.setPhoneNumber("4123423423");
-        userInfo.setUserEntityId(user);
-
-        WalletUser walletUser = new WalletUser();
-        walletUser.setPocketBalance(1000000L);
-        walletUser.setUserBalance(1000000L);
-        walletUser.setUserEntityId(user);
-
-        user.setUserInfo(userInfo);
-        user.setWalletUser(walletUser);
-
-        //Act
-        //Mock behavior for passwordEncoder
-        BCryptPasswordEncoder passwordEncoder = Mockito.mock(BCryptPasswordEncoder.class);
-        Mockito
-                .when(passwordEncoder.encode(Mockito.any(CharSequence.class)))
-                        .thenReturn("encodedPassword");
-
-//        userService.setPasswordEncoder(passwordEncoder);
-
-        Mockito
-                .when(userRepository.save(user))
-                .thenAnswer(
-                        (invocation) -> invocation.<UserEntity>getArgument(0)
-                );
-
-        UserEntity savedUser = userService.createUserBody(user);
-
-        //Asserts
-        assertThat(savedUser).isNotNull();
-        assertThat(savedUser.getUserInfo()).isNotNull();
-        assertThat(savedUser.getSavingsUsers()).isNotNull();
-        assertThat(savedUser.getWalletUser()).isNotNull();
-    }
+//    @Test
+//    @Disabled
+//    void shouldCreateUserWithTheRelationObject() {
+//        //Arrange
+////        UserEntity user = new UserEntity();
+//        user.setPin("123456");
+//        user.setEmail("TestingEmail@gmail.com");
+//
+//        UserInfo userInfo = new UserInfo();
+//        userInfo.setUsername("Testing");
+//        userInfo.setJoinAt(new Date());
+//        userInfo.setPhoneNumber("4123423423");
+//        userInfo.setUserEntityId(user);
+//
+//        WalletUser walletUser = new WalletUser();
+//        walletUser.setPocketBalance(1000000L);
+//        walletUser.setUserBalance(1000000L);
+//        walletUser.setUserEntityId(user);
+//
+//        user.setUserInfo(userInfo);
+//        user.setWalletUser(walletUser);
+//
+//        //Act
+//        //Mock behavior for passwordEncoder
+//        BCryptPasswordEncoder passwordEncoder = Mockito.mock(BCryptPasswordEncoder.class);
+//        Mockito
+//                .when(passwordEncoder.encode(Mockito.any(CharSequence.class)))
+//                        .thenReturn("encodedPassword");
+//
+////        userService.setPasswordEncoder(passwordEncoder);
+//
+//        Mockito
+//                .when(userRepository.save(user))
+//                .thenAnswer(
+//                        (invocation) -> invocation.<UserEntity>getArgument(0)
+//                );
+//
+//        UserEntity savedUser = userService.createUserBody(user);
+//
+//        //Asserts
+//        assertThat(savedUser).isNotNull();
+//        assertThat(savedUser.getUserInfo()).isNotNull();
+//        assertThat(savedUser.getSavingsUsers()).isNotNull();
+//        assertThat(savedUser.getWalletUser()).isNotNull();
+//    }
 
     public String generateAccountNumber() {
         Random random_number = new Random();

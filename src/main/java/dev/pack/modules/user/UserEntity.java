@@ -62,8 +62,9 @@ public class UserEntity implements UserDetails {
     public void setWalletUser() {
         if(this.walletUser == null){
             this.walletUser = new WalletUser();
-            this.walletUser.setUserBalance(0L);
             this.walletUser.setPocketBalance(0L);
+            this.walletUser.setUserBalance(0L);
+//            this.walletUser.setWalletId(walletUser.getWalletId());
             this.walletUser.setUserEntityId(this);
         }
     }

@@ -82,19 +82,19 @@ public class GlobalExceptionHandling extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
-    @ResponseStatus(HttpStatus.CONFLICT)
-    @ExceptionHandler(DataIntegrityViolationException.class)
-    public ResponseEntity<ValidationErrorResponse> handleDataIntegrityViolationException(
-            DataIntegrityViolationException ex
-    ) {
-        List<String> messages = new ArrayList<>();
-        messages.add("There is duplicate value in unique field!");
-        ValidationErrorResponse errorResponse = ValidationErrorResponse.builder()
-                .statusCode(HttpStatus.CONFLICT.value())
-                .message(messages)
-                .build();
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
-    }
+//    @ResponseStatus(HttpStatus.CONFLICT)
+//    @ExceptionHandler(DataIntegrityViolationException.class)
+//    public ResponseEntity<ValidationErrorResponse> handleDataIntegrityViolationException(
+//            DataIntegrityViolationException ex
+//    ) {
+//        List<String> messages = new ArrayList<>();
+//        messages.add("There is duplicate value in unique field!");
+//        ValidationErrorResponse errorResponse = ValidationErrorResponse.builder()
+//                .statusCode(HttpStatus.CONFLICT.value())
+//                .message(messages)
+//                .build();
+//        return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
+//    }
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(

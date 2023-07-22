@@ -2,6 +2,7 @@ package dev.pack.modules.user;
 
 import dev.pack.modules.payment.paymentNotification.TopUpPaymentHistoryRepository;
 import dev.pack.modules.userInfo.UserInfoInfoServiceImpl;
+import dev.pack.modules.walletUser.WalletUserService;
 import dev.pack.utils.Generate;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,7 @@ import java.util.*;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final WalletUserService walletUserService;
     private final UserInfoInfoServiceImpl userInfoServiceImpl;
     private final BCryptPasswordEncoder passwordEncoder;
     private final Generate generate;
@@ -42,18 +44,13 @@ public class UserServiceImpl implements UserService {
                     NullPointerException.class
             })
     public UserEntity createUserBody(UserEntity user){
-        user.setPin(
-                passwordEncoder.encode(user.getPassword()) //Hash pin
-        );
+        user.setPin(passwordEncoder.encode(user.getPassword()));
 
-        user.setAccountId(
-                generate.randomIdNumber(15) //Generating random number
-        );
+        user.setAccountId(generate.randomIdNumber(15));
 
         userInfoServiceImpl.createUserInfoBody(user); //Creating user info body object
 
-        user.getWalletUser().setWalletId(generate.randomIdNumber(12)); //Generate random wallet id
-
+        user.getWalletUser().setWalletId(generate.randomIdNumber(12));
         return userRepository.save(user); //Savings all user body and those relational object though
     }
 
