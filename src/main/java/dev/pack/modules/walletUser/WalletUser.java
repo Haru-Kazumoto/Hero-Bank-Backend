@@ -29,7 +29,7 @@ public class WalletUser {
     private Long userBalance;
     private Long pocketBalance;
 
-    @Column(unique = true, nullable = false)
+//    @Column(unique = true, nullable = false)
     private String walletId;
 
     @JsonIgnoreProperties(

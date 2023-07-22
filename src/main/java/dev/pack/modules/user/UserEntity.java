@@ -60,13 +60,13 @@ public class UserEntity implements UserDetails {
 
     @PrePersist
     public void setWalletUser() {
-        if(this.walletUser == null){
+//        if(this.walletUser == null){
             this.walletUser = new WalletUser();
             this.walletUser.setPocketBalance(0L);
             this.walletUser.setUserBalance(0L);
 //            this.walletUser.setWalletId(walletUser.getWalletId());
             this.walletUser.setUserEntityId(this);
-        }
+//        }
     }
 
     //Authority is not used in this app

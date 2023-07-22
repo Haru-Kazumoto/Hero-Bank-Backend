@@ -2,10 +2,12 @@ package dev.pack.utils;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.Random;
 
-@Component
+//@Component
+@Service
 public class Generate {
 
     @Value("${payment.top-up.history.prefix-history-id}") String prefixIdPayment;
