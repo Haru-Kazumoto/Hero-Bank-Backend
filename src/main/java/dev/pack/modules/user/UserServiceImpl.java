@@ -1,9 +1,7 @@
 package dev.pack.modules.user;
 
-import dev.pack.modules.payment.paymentNotification.TopUpPaymentHistoryRepository;
-import dev.pack.modules.userInfo.UserInfoInfoServiceImpl;
-import dev.pack.modules.walletUser.WalletUser;
-import dev.pack.modules.walletUser.WalletUserService;
+import dev.pack.modules.payment.topup.TopUpPaymentHistoryRepository;
+import dev.pack.modules.userInfo.UserInfoServiceImpl;
 import dev.pack.utils.Generate;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -23,12 +21,18 @@ import java.util.*;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final WalletUserService walletUserService;
-    private final UserInfoInfoServiceImpl userInfoServiceImpl;
+    private final UserInfoServiceImpl userInfoServiceImpl;
     private final BCryptPasswordEncoder passwordEncoder;
     private final Generate generate;
     private final TopUpPaymentHistoryRepository topUpPaymentHistoryRepository;
 
+    /**
+     * Find user by they pin, and then it'll return the object of userDetails.
+     *
+     * @param pin
+     * @return UserDetails
+     * @throws UsernameNotFoundException
+     */
     @Override
     public UserDetails loadUserByUsername(String pin) throws UsernameNotFoundException {
         return userRepository
@@ -36,43 +40,53 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new NoSuchElementException("Pin user not found."));
     }
 
+    /**
+     * This method for registering user in auth.
+     * First it will encode the password, and then set the account id with random generator.
+     * Then create the user info object by .createUserInfoBody();
+     * also set the wallet id with the same random generator
+     * and then it will return the userEntity object and the relational object tho.
+     *
+     * If the register has some exception it will auto rollback with @Transactional annotation,
+     * check what's the exception that cause the rollback on the rollbackOn={}.
+     *
+     *
+     * @param user
+     * @return UserEntity
+     */
     @Override
-    @Transactional(
-            rollbackOn = {
-                    DataIntegrityViolationException.class,
-                    SQLException.class,
-                    DuplicateKeyException.class,
-                    NullPointerException.class
-            })
-    public UserEntity createUserBody(UserEntity user){
-//        WalletUser walletUser = user.getWalletUser();
-//        walletUser.setWalletId(generate.randomIdNumber(12));
-        System.out.println(user.getWalletUser());
+    @Transactional(rollbackOn = {
+            DataIntegrityViolationException.class,
+            SQLException.class,
+            DuplicateKeyException.class,
+            NullPointerException.class
+    })
+    public UserEntity createUserBody(UserEntity user) {
         user.setPin(passwordEncoder.encode(user.getPassword()));
-
         user.setAccountId(generate.randomIdNumber(15));
-
-        userInfoServiceImpl.createUserInfoBody(user); //Creating user info body object
-//        walletUserService.createWalletUserBody(user.getWalletUser());
+        userInfoServiceImpl.createUserInfoBody(user);
         user.getWalletUser().setWalletId(generate.randomIdNumber(12));
-
-        return userRepository.save(user); //Savings all user body and those relational object though
+        return userRepository.save(user);
     }
 
-    private Map<String, String> setResponse(UUID id, HttpStatus status, String message) {
-        Map<String, String> response = new HashMap<>();
-        response.put("id", id.toString());
-        response.put("status", status.toString());
-        response.put("message", message);
-
-        return response;
-    }
-
+    /**
+     * Get all the user that has created.
+     * Exclude : pin
+     *
+     * @return List of UserEntity
+     */
     @Override
     public List<UserEntity> getAllUser() {
         return userRepository.findAll();
     }
 
+    /**
+     * Deleting user by id and then it will find the id and delete them,
+     * but if not found (.isEmpty) it will return NoSuchElementException.
+     *
+     * @param id
+     * @return Map with key String and value String
+     */
     @Override
     public Map<String, String> deleteUserById(UUID id) {
         Optional<UserEntity> findId = userRepository.findById(id);
@@ -92,6 +106,30 @@ public class UserServiceImpl implements UserService {
         );
     }
 
+    /**
+     * Custom response for delete user by id.
+     *
+     * @param id
+     * @param status
+     * @param message
+     * @return Map with key String and value String
+     */
+    private Map<String, String> setResponse(UUID id, HttpStatus status, String message) {
+        Map<String, String> response = new HashMap<>();
+        response.put("id", id.toString());
+        response.put("status", status.toString());
+        response.put("message", message);
+
+        return response;
+    }
+
+    /**
+     * Updating user with the id of user, that has rollback system.
+     *
+     * @param id
+     * @param user
+     * @return UserEntity
+     */
     @Override
     @Transactional(rollbackOn = {
             NoSuchElementException.class,

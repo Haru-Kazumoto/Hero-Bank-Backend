@@ -12,5 +12,7 @@ public interface SavingsUserService {
     Map<String, String> deleteSavingsUserById(UUID savingUserId);
     SavingsUserResponse convertToResponseDto(SavingsUser savingsUser);
     List<SavingsUser> getSavingsUserByIdUser(UUID userId);
+    List<SavingsUser> getSavingsUserByAccountIdUser(String accountId);
     SavingsUser addSavingsBalanceFromUserBalance(SavingsUser savingsUser);
+
 }

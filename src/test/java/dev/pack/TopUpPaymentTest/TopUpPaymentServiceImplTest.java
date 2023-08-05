@@ -1,23 +1,14 @@
 package dev.pack.TopUpPaymentTest;
 
-import dev.pack.enums.OutletPaymentsEnum;
 import dev.pack.modules.payment.topup.TopUpPaymentServiceImpl;
-import dev.pack.modules.payment.paymentNotification.TopUpPaymentHistoryRepository;
-import dev.pack.modules.payment.topup.TopUpPaymentsDto;
+import dev.pack.modules.payment.topup.TopUpPaymentHistoryRepository;
 import dev.pack.modules.user.UserRepository;
 import dev.pack.modules.user.UserServiceImpl;
-import dev.pack.modules.walletUser.WalletUser;
 import dev.pack.modules.walletUser.WalletUserRepository;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
 public class TopUpPaymentServiceImplTest {

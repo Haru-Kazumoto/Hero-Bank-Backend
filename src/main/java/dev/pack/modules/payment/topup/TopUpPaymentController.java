@@ -1,6 +1,6 @@
 package dev.pack.modules.payment.topup;
 
-import dev.pack.modules.payment.paymentNotification.TopUpPaymentHistory;
+import dev.pack.modules.payment.historyPayments.TopUpPaymentHistory;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

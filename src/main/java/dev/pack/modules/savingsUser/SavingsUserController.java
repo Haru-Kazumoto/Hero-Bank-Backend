@@ -2,6 +2,7 @@ package dev.pack.modules.savingsUser;
 
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
@@ -49,6 +50,14 @@ public class SavingsUserController {
         return ResponseEntity
                 .status(response.getStatus())
                 .body(savingsUserService.getAllRecord());
+    }
+
+    //OK
+    @GetMapping(path = "/get-savings/account-id/{accountId}")
+    public ResponseEntity<?> getSavingsUserByAccountIdUser(@PathVariable("accountId") @NonNull String accountId){
+        return ResponseEntity
+                .status(200)
+                .body(savingsUserService.getSavingsUserByAccountIdUser(accountId));
     }
 
     @GetMapping(path = "/get-savings/user-id/{userId}")

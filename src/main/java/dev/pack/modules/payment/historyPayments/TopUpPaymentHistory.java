@@ -1,4 +1,4 @@
-package dev.pack.modules.payment.paymentNotification;
+package dev.pack.modules.payment.historyPayments;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;

@@ -9,6 +9,9 @@ import java.util.Date;
 
 public class TopUpPaymentsDto {
 
+    /**
+     *Request body for top up payment
+     */
     @Data
     @Builder
     @AllArgsConstructor
@@ -25,8 +28,9 @@ public class TopUpPaymentsDto {
         private String walletId;
     }
 
-    // Response //
-
+    /**
+     * Response for transfer payment raceipt
+     */
     @Data
     @Builder
     @AllArgsConstructor

@@ -4,6 +4,7 @@ import dev.pack.exception.IdNotFoundException;
 import dev.pack.modules.user.UserEntity;
 import dev.pack.modules.user.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -41,6 +42,18 @@ public class SavingsUserServiceImpl implements SavingsUserService {
         }
 
         return id_user.isEmpty() ? List.of() : id_user;
+    }
+
+    @Override
+    public List<SavingsUser> getSavingsUserByAccountIdUser(@NonNull String accountId) {
+        UserEntity accountIdUser = userRepository
+                .findByAccountId(accountId)
+                .orElseThrow(() -> new IdNotFoundException("Account id not found."));
+        if(accountIdUser.equals("")){
+            return List.of();
+        }
+
+        return accountIdUser.getSavingsUsers();
     }
 
     @Override

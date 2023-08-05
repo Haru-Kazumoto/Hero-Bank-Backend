@@ -4,9 +4,12 @@ import dev.pack.modules.user.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.NoSuchElementException;
+
 @Service
 @RequiredArgsConstructor
-public class UserInfoInfoServiceImpl implements UserInfoService {
+public class UserInfoServiceImpl implements UserInfoService {
 
     private final UserInfoRepository userInfoRepository;
 
@@ -17,5 +20,4 @@ public class UserInfoInfoServiceImpl implements UserInfoService {
 
         return userInfoRepository.save(userInfo);
     }
-
 }

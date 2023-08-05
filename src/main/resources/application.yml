@@ -23,6 +23,8 @@ spring:
 
 #Server configuration
 server:
+#  servlet:
+#    context-path: /api/v1/
   port: 6666
   error:
     include-message: always
